@@ -40,3 +40,35 @@ list.addEventListener('click', function(ev) {
   }
 }, false);
 
+function newElement() {
+    const li = document.createElement("li");
+    const input = document.getElementById("myInput");
+    const inputValue = input.value.trim();
+  
+    if (inputValue === '') {
+      alert("Please enter a task!");
+      return;
+    }
+  
+    if (inputValue.length > 40) {
+      alert("Task cannot be more than 40 characters!");
+      return;
+    }
+  
+    const text = document.createTextNode(inputValue);
+    li.appendChild(text);
+    document.getElementById("myUL").appendChild(li);
+    input.value = "";
+  
+    const span = document.createElement("SPAN");
+    const txt = document.createTextNode("\u00D7");
+    span.className = "close";
+    span.appendChild(txt);
+    li.appendChild(span);
+  
+    span.onclick = function () {
+      const div = this.parentElement;
+      div.remove();
+    }
+  }
+  
