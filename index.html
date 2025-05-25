@@ -8,29 +8,31 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"/>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body class="light">
+  <div class="page-wrapper">
+    <h1>To-Do List</h1>
 
-  <button id="themeToggle" title="Toggle light/dark mode"><i class="fas fa-adjust"></i></button>
+    <!-- ✅ Toggle Theme Button -->
+    <button id="themeToggle" aria-label="Toggle Theme">
+        <span class="tooltip">Toggle Theme</span>
+    </button>
 
-  <div class="container">
-    <h2>✅ Irina's To-Do List</h2>
-
+    <!-- ✅ Task Input Section -->
     <div id="myDIV">
-      <input type="text" id="myInput" placeholder="Add a task...">
+      <input type="text" id="myInput" placeholder="Add a task..." maxlength="40">
       <button onclick="newElement()" class="addBtn">Add</button>
     </div>
 
-    <ul id="myUL">
-      <!-- Tasks will appear here -->
-    </ul>
-
-    <footer>
-      Developed by Irina Leeming
-    </footer>
+    <!-- ✅ Task List -->
+    <ul id="myUL"></ul>
   </div>
+
+  <footer>
+    <p>Made with ❤️ by Irina Leeming</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
 </html>
+
