@@ -30,6 +30,14 @@ function newElement() {
   saveTasks();
 }
 
+// Add task when Enter is pressed
+document.getElementById("myInput").addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    newElement();
+  }
+});
+
+
 // Helper: Create and insert task
 function addTaskToDOM(text, checked = false) {
   const li = document.createElement("li");

@@ -126,14 +126,14 @@ ul {
 }
 
 ul li {
-  padding: 12px 8px;
+  padding: 5px 4px;
   background: #f9f9f9;
   font-size: 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
-  border-radius: 8px;
+  margin-bottom: 4px;
+  border-radius: 4px;
 }
 
 ul li:hover {
