@@ -1,227 +1,201 @@
-/* Base Reset */
 * {
-    box-sizing: border-box;
-  }
-  
-  html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-    display: flex;
-    flex-direction: column;
-    background-color: #ffffff;
-    color: #000;
-    transition: background 0.3s, color 0.3s;
-  }
-  
-  /* Page Layout */
-  .page-wrapper {
-    flex: 1;
-    padding: 20px;
-  }
-  
-  /* Header */
-  h1 {
-    text-align: center;
-    color: #4A90E2;
-    margin-top: 0;
-    margin-bottom: 20px;
-  }
-  
-  /* Floating Theme Toggle Button */
-  .theme-toggle-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-  }
-  
-/* Header Row */
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #ffffff;
+  color: #000;
+  transition: background 0.3s, color 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-wrapper {
+  flex: 1;
+  padding: 20px;
+}
+
 .header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    margin-bottom: 20px;
-  }
-  
-  /* Keep h1 centered within flex */
-  .header-row h1 {
-    flex: 1;
-    text-align: center;
-    color: #4A90E2;
-    margin: 0;
-  }
-  
-  /* Circle Toggle on Right */
-  #themeToggle {
-    background-color: #F1C40F;
-    border: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    font-size: 24px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative;
-    transition: background 0.3s, transform 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  /* Hover Effects */
-  #themeToggle:hover {
-    background-color: #D4AC0D;
-    transform: scale(1.1);
-  }
-  
-/* Tooltip (appears below the toggle) */
+  position: relative;
+  text-align: center;
+  margin-bottom: 30px;
+  padding-top: 20px;
+}
+
+.header-row h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+#themeToggle {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #F1C40F;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s, transform 0.3s;
+}
+
+#themeToggle:hover {
+  background-color: #D4AC0D;
+  transform: scale(1.1);
+}
+
 .tooltip {
-    visibility: hidden;
-    background-color: transparent; /* transparent */
-    color: #fff; /* default light text */
-    text-align: center;
-    border-radius: 6px;
-    padding: 6px 10px;
-    position: absolute;
-    top: 60px; /* BELOW the toggle */
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    transition: opacity 0.3s;
-    font-size: 12px;
-    pointer-events: none;
-    white-space: nowrap;
-    z-index: 10;
-  }
-  
-  #themeToggle:hover .tooltip {
-    visibility: visible;
-    opacity: 1;
-  }
-  
-  /* Light theme tooltip text color override */
-  body.light .tooltip {
-    color: #000; /* Dark text on light theme */
-  }
-  
-  
-  /* Input Area */
+  visibility: hidden;
+  color: #333;
+  background-color: transparent;
+  font-size: 12px;
+  text-align: center;
+  padding: 4px;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+#themeToggle:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+body.dark .tooltip {
+  color: #fff;
+}
+
+
+h1 {
+  color: #4A90E2;
+  margin: 0 0 20px 0;
+}
+
+/* Input Section */
+#myDIV {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 66%;
+  margin: 0 auto 20px auto;
+}
+
+#myInput {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.addBtn {
+  width: 100%;
+  padding: 12px;
+  background: #4A90E2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.addBtn:hover {
+  background-color: #357ABD;
+}
+
+/* Task List */
+ul {
+  list-style-type: none;
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+  max-width: 66%;
+}
+
+ul li {
+  padding: 12px 8px;
+  background: #f9f9f9;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  border-radius: 8px;
+}
+
+ul li:hover {
+  background: #eee;
+}
+
+ul li.checked {
+  text-decoration: line-through;
+  color: #27AE60;
+}
+
+/* Delete Button */
+.close {
+  color: #E74C3C;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.close:hover {
+  color: #c0392b;
+}
+
+/* Dark Mode */
+body.dark {
+  background-color: #2C3E50;
+  color: white;
+}
+
+body.dark ul li {
+  background: #3b4b5c;
+}
+
+body.dark ul li:hover {
+  background: #465a6b;
+}
+
+/* Footer */
+footer {
+  background-color: #4A90E2;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (min-width: 600px) {
   #myDIV {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    max-width: 66%;
-    margin: 0 auto 20px auto;
+    flex-direction: row;
   }
-  
+
   #myInput {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    flex: 1;
   }
-  
+
   .addBtn {
-    width: 100%;
-    padding: 12px;
-    background: #4A90E2;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
+    width: auto;
+    white-space: nowrap;
   }
-  
-  .addBtn:hover {
-    background-color: #357ABD;
-  }
-  
-  /* Task List */
-  ul {
-    list-style-type: none;
-    margin: 0 auto;
-    padding: 0;
-    width: 100%;
-    max-width: 66%;
-  }
-  
-  ul li {
-    padding: 12px 8px;
-    background: #f9f9f9;
-    font-size: 18px;
-    transition: 0.2s;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-    border-radius: 8px;
-  }
-  
-  ul li:hover {
-    background: #eee;
-  }
-  
-  ul li.checked {
-    text-decoration: line-through;
-    color: #27AE60;
-  }
-  
-  /* Delete Button */
-  .close {
-    color: #E74C3C;
-    font-weight: bold;
-    cursor: pointer;
-    margin-left: 12px;
-    font-size: 20px;
-  }
-  
-  .close:hover {
-    color: #c0392b;
-  }
-  
-  /* Dark Mode */
-  body.dark {
-    background-color: #2C3E50;
-    color: white;
-  }
-  
-  body.dark ul li {
-    background: #3b4b5c;
-  }
-  
-  body.dark ul li:hover {
-    background: #465a6b;
-  }
-  
-  /* Footer */
-  footer {
-    background-color: #4A90E2;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    font-size: 14px;
-  }
-  
-  /* Responsive (Tablet and Up) */
-  @media (min-width: 600px) {
-    #myDIV {
-      flex-direction: row;
-    }
-  
-    #myInput {
-      flex: 1;
-    }
-  
-    .addBtn {
-      width: auto;
-      white-space: nowrap;
-    }
-  }
+}
+
   
   
   

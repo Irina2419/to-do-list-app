@@ -4,15 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>✅ To-Do List App</title>
+
+  <!-- Link to external stylesheet -->
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- Google Fonts (Roboto) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
 </head>
 <body class="light">
   <div class="page-wrapper">
-
-    <!-- ✅ Header with H1 and Theme Toggle -->
+    <!-- Header section with H1 and Theme Toggle aligned horizontally -->
     <div class="header-row">
       <h1>To-Do List</h1>
       <button id="themeToggle" aria-label="Toggle Theme">
@@ -20,13 +23,18 @@
       </button>
     </div>
 
-    <!-- ✅ Task Input Section -->
+    <!-- Task input area -->
     <div id="myDIV">
-      <input type="text" id="myInput" placeholder="Add a task..." maxlength="40" />
+      <input
+        type="text"
+        id="myInput"
+        placeholder="Add a task..."
+        maxlength="40"
+      />
       <button onclick="newElement()" class="addBtn">Add</button>
     </div>
 
-    <!-- ✅ Task List -->
+    <!-- Task list -->
     <ul id="myUL"></ul>
   </div>
 
@@ -34,6 +42,8 @@
     <p>Made with ❤️ by Irina Leeming</p>
   </footer>
 
+  <!-- Link to JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
+

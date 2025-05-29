@@ -7,10 +7,10 @@ if (themeBtn) {
   });
 }
 
-// Create new task
+// Add new task
 function newElement() {
   const input = document.getElementById("myInput");
-  const inputValue = input.value.trim();
+  let inputValue = input.value.trim();
 
   if (inputValue === "") {
     alert("Please enter a task!");
@@ -22,56 +22,63 @@ function newElement() {
     return;
   }
 
-  const li = document.createElement("li");
-  li.textContent = inputValue;
+  // Capitalize first letter, rest lowercase
+  inputValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1).toLowerCase();
 
-  const closeBtn = document.createElement("span");
-  closeBtn.className = "close";
-  closeBtn.innerHTML = "&times;";
-  closeBtn.onclick = function () {
-    this.parentElement.remove();
-  };
-
-  li.appendChild(closeBtn);
-  document.getElementById("myUL").appendChild(li);
+  addTaskToDOM(inputValue);
   input.value = "";
+  saveTasks();
 }
 
-// Mark task as complete
+// Helper: Create and insert task
+function addTaskToDOM(text, checked = false) {
+  const li = document.createElement("li");
+  li.textContent = text;
+  if (checked) li.classList.add("checked");
+
+  const span = document.createElement("SPAN");
+  span.className = "close";
+  span.textContent = "\u00D7";
+  span.onclick = function () {
+    this.parentElement.remove();
+    saveTasks();
+  };
+
+  li.appendChild(span);
+  document.getElementById("myUL").appendChild(li);
+}
+
+// Mark as complete
 document.getElementById("myUL").addEventListener("click", function (e) {
   if (e.target.tagName === "LI") {
     e.target.classList.toggle("checked");
+    saveTasks();
   }
 });
 
-function newElement() {
-  const li = document.createElement("li");
-  const input = document.getElementById("myInput");
-  const inputValue = input.value.trim();
-
-  if (inputValue === "") {
-    alert("Please enter a task!");
-    return;
-  }
-
-  if (inputValue.length > 40) {
-    alert("Task cannot be more than 40 characters!");
-    return;
-  }
-
-  const text = document.createTextNode(inputValue);
-  li.appendChild(text);
-  document.getElementById("myUL").appendChild(li);
-  input.value = "";
-
-  const span = document.createElement("SPAN");
-  const txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  li.appendChild(span);
-
-  span.onclick = function () {
-    const div = this.parentElement;
-    div.remove();
-  };
+// Save tasks to localStorage
+function saveTasks() {
+  const tasks = [];
+  document.querySelectorAll("#myUL li").forEach((li) => {
+    const text = li.firstChild.nodeValue.trim();
+    const checked = li.classList.contains("checked");
+    tasks.push({ text, checked });
+  });
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 }
+
+// Load tasks
+function loadTasks() {
+  const saved = localStorage.getItem("tasks");
+  if (saved) {
+    const tasks = JSON.parse(saved);
+    tasks.forEach(task => addTaskToDOM(task.text, task.checked));
+  }
+}
+
+loadTasks();
+
+
+
+
+  
