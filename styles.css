@@ -91,6 +91,110 @@ html, body {
   }
 }
 
+/* Spin and fade out animation */
+@keyframes spinOut {
+  0% {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(720deg) scale(0);
+  }
+}
+
+li.removing {
+  animation: spinOut 0.7s ease forwards;
+}
+
+/* Firework message styling */
+.firework-message {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #f1c40f;
+  color: #2c3e50;
+  font-size: 1.5rem;
+  padding: 15px 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 30px #f39c12;
+  z-index: 1000;
+  animation: fireworks 1s ease-out, fadeOut 1.5s 1s forwards;
+}
+
+/* Firework burst animation */
+@keyframes fireworks {
+  0% {
+    transform: translateX(-50%) scale(0.2);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(-50%) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+/* Fade out */
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.firework-container {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.firework-message {
+  background: #f1c40f;
+  color: #2c3e50;
+  font-size: 1.5rem;
+  padding: 15px 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 30px #f39c12;
+  animation: fadeOut 2s 1s forwards;
+  position: relative;
+  z-index: 1001;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.firework-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ff005e;
+  animation: burst 2s ease-out forwards;
+}
+
+@keyframes burst {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.5) translate(var(--x), var(--y));
+    opacity: 0;
+  }
+}
+
+
 
 body.dark .tooltip {
   color: #fff;
