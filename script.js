@@ -1,3 +1,5 @@
+/* jshint esversion: 6 */
+
 // Toggle light/dark theme
 const themeBtn = document.getElementById("themeToggle");
 if (themeBtn) {
