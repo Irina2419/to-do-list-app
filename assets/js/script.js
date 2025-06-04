@@ -105,21 +105,26 @@ function addTaskToDOM(text, checked = false) {
 
 // Mark a task as complete or incomplete
 document.getElementById("myUL").addEventListener("click", function (e) {
-  if (e.target.tagName === "LI") {
-    e.target.classList.toggle("checked"); // Toggles the "checked" class on the clicked task
-    saveTasks(); // Calls the function to save the updated task list
+  // Find the closest 'li' ancestor of the clicked element
+  const listItem = e.target.closest('li');
+
+  // If an 'li' was found and the click was not on the 'close' button
+  if (listItem && !e.target.classList.contains('close')) {
+    listItem.classList.toggle("checked"); // Toggle the "checked" class on the LI
+    saveTasks(); // Save the updated task list
   }
 });
 
 // Save tasks to localStorage
 function saveTasks() {
-  const tasks = []; // Initializes an empty array to store tasks
+  const tasks = [];
   document.querySelectorAll("#myUL li").forEach((li) => {
-    const text = li.firstChild.nodeValue.trim(); // Gets the task text
-    const checked = li.classList.contains("checked"); // Checks if the task is marked as complete
-    tasks.push({ text, checked }); // Adds the task to the array
+    // CORRECTED LINE: Get the text content from the span with class 'task-text'
+    const text = li.querySelector(".task-text").textContent.trim();
+    const checked = li.classList.contains("checked");
+    tasks.push({ text, checked });
   });
-  localStorage.setItem("tasks", JSON.stringify(tasks)); // Saves tasks to localStorage as a JSON string
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
 // Load tasks from localStorage
