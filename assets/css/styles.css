@@ -256,24 +256,31 @@ ul {
   padding: 0;
   width: 100%;
   max-width: 66%;
+  display: flex;         /* Make it a flex container */
+  flex-wrap: wrap;       /* Allow items to wrap to the next line */
+  justify-content: flex-start; /* Align items to the start (left) */
+  gap: 10px;             /* Add a gap BETWEEN the li elements */
 }
 
 ul li {
-  padding: 2px 2px;
+  padding: 8px 12px;
   background: #F5F5F7;
   line-height: 1.6;
   font-size: 18px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 4px;
+  gap: 10px;             /* Gap BETWEEN task text and close button */
+  margin-bottom: 0;      /* REMOVE margin-bottom if gap on ul is used, or adjust as needed */
   border-radius: 999px;
   font-family: 'Homemade Apple', cursive, sans-serif;
+  /* REMOVE this line: width: 48%; */ /* <-- REMOVE THIS LINE */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: background 0.2s, box-shadow 0.2s;
 }
-
 
 ul li:hover {
   background: #eee;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
 }
 
 ul li.checked .task-text {
@@ -281,13 +288,33 @@ ul li.checked .task-text {
   color: #27AE60;
 }
 
+ul li .task-text {
+  /* No flex-grow: 1 needed if li is not fixed width */
+  /* If you want the text to expand within the padding but not force the li to expand more than needed,
+     you can use min-width and max-width if desired, but letting it shrink/grow naturally is simpler. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-/* Delete Button */
+/* Ensure the .close button has the correct styles and doesn't shrink */
 .close {
   color: #E74C3C;
   font-weight: bold;
   cursor: pointer;
   font-size: 20px;
+  flex-shrink: 0;
+  padding: 0 5px;
+}
+
+/* The media query for smaller screens can be simplified or removed,
+   as the default behavior will now be responsive. */
+@media (max-width: 768px) {
+  ul li {
+    /* If you still want a minimum width for very short tasks on small screens, you can add it here.
+       Otherwise, this block can be removed as the default flex behavior will handle it. */
+    /* min-width: 150px; */
+  }
 }
 
 .close:hover {
