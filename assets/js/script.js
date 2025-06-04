@@ -32,7 +32,6 @@ if (savedTheme === "dark" || savedTheme === "light") {
   setTheme("light"); // default
 }
 
-
 // Add a new task to the list
 function newElement() {
   const input = document.getElementById("myInput"); // Gets the input field with ID "myInput" from the HTML
@@ -69,7 +68,11 @@ document.getElementById("myInput").addEventListener("keypress", function (e) {
 // Helper function: Create and insert a task into the DOM
 function addTaskToDOM(text, checked = false) {
   const li = document.createElement("li"); // Creates a new list item (li) element
-  li.textContent = text; // Sets the task text
+  const textSpan = document.createElement("span");
+  textSpan.className = "task-text";
+  textSpan.textContent = text;
+  li.appendChild(textSpan);
+
   if (checked) li.classList.add("checked"); // Adds the "checked" class if the task is marked as complete
 
   const span = document.createElement("SPAN"); // Creates a close button (span element)
@@ -150,8 +153,8 @@ function showFireworkMessage() {
     const x = Math.cos(angle) * distance; // Calculates the horizontal offset using cosine
     const y = Math.sin(angle) * distance; // Calculates the vertical offset using sine
 
-    dot.style.setProperty('--x', `${x}px`); // Sets the horizontal position as a CSS custom property
-    dot.style.setProperty('--y', `${y}px`); // Sets the vertical position as a CSS custom property
+    dot.style.setProperty("--x", `${x}px`); // Sets the horizontal position as a CSS custom property
+    dot.style.setProperty("--y", `${y}px`); // Sets the vertical position as a CSS custom property
 
     container.appendChild(dot); // Adds the dot to the firework container
   }

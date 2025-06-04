@@ -276,10 +276,11 @@ ul li:hover {
   background: #eee;
 }
 
-ul li.checked {
+ul li.checked .task-text {
   text-decoration: line-through;
   color: #27AE60;
 }
+
 
 /* Delete Button */
 .close {
