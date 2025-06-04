@@ -103,16 +103,16 @@ html, body {
   color: #4A90E2; /* Your existing blue */
   text-align: center;
   margin: 0;
-  text-shadow: 3px 3px 0 #F1C40F, 6px 6px 0 #E74C3C;
+  text-shadow: 3px 3px 0 #F1C40F, 6px 6px 0 #FF69B4;
   animation: shadow-dance 2s infinite ease-in-out;
 }
 
 @keyframes shadow-dance {
   0%, 100% {
-    text-shadow: 3px 3px 0 #F1C40F, 6px 6px 0 #E74C3C;
+    text-shadow: 3px 3px 0 #F1C40F, 6px 6px 0 #FF69B4;
   }
   50% {
-    text-shadow: -3px -3px 0 #E74C3C, -6px -6px 0 #F1C40F;
+    text-shadow: -3px -3px 0 #FF69B4, -6px -6px 0 #F1C40F;
   }
 }
 
