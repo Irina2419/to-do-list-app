@@ -1,14 +1,37 @@
 /* jshint esversion: 6 */
 
 // Toggle light/dark theme
-const themeBtn = document.getElementById("themeToggle"); // Gets the button with ID "themeToggle" from the HTML
-if (themeBtn) {
-  themeBtn.addEventListener("click", () => {
-    // Toggles between "dark" and "light" classes on the body element
-    document.body.classList.toggle("dark"); // Adds or removes the "dark" class for dark mode
-    document.body.classList.toggle("light"); // Adds or removes the "light" class for light mode
-  });
+const body = document.body;
+const lightBtn = document.getElementById("lightMode");
+const darkBtn = document.getElementById("darkMode");
+
+function setTheme(mode) {
+  if (mode === "dark") {
+    body.classList.add("dark");
+    body.classList.remove("light");
+    darkBtn.classList.add("active");
+    lightBtn.classList.remove("active");
+  } else {
+    body.classList.add("light");
+    body.classList.remove("dark");
+    lightBtn.classList.add("active");
+    darkBtn.classList.remove("active");
+  }
+  localStorage.setItem("theme", mode); // Optional: Save preference
 }
+
+// Event listeners
+lightBtn.addEventListener("click", () => setTheme("light"));
+darkBtn.addEventListener("click", () => setTheme("dark"));
+
+// Load saved theme on startup
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme === "dark" || savedTheme === "light") {
+  setTheme(savedTheme);
+} else {
+  setTheme("light"); // default
+}
+
 
 // Add a new task to the list
 function newElement() {

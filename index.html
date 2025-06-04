@@ -8,6 +8,9 @@
   <!-- Link to external stylesheet -->
   <link rel="stylesheet" href="assets/css/styles.css"> <!-- Links the CSS file for styling -->
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
   <link type="image/png" sizes="32x32" rel="icon" href="assets/images/icons8-done-32.png"> <!-- Favicon for the app -->
 
   <!-- Google Fonts (Roboto) -->
@@ -22,9 +25,11 @@
     <!-- Header section with H1 and Theme Toggle aligned horizontally -->
     <div class="header-row"> <!-- Styled using the "header-row" class -->
       <h1 class="shadow-dance-text">To-Do List</h1> <!-- Header text with animated shadow effect -->
-      <button id="themeToggle" aria-label="Toggle Theme"> <!-- Button to toggle between light and dark themes -->
-        <span class="tooltip">Toggle Theme</span> <!-- Tooltip displayed on hover -->
-      </button>
+      <div class="theme-toggle">
+        <button id="lightMode" class="sun active">☀️</button>
+        <button id="darkMode" class="moon">🌙</button>
+      </div>      
+      
     </div>
 
     <!-- Task input area -->
@@ -34,7 +39,9 @@
         id="myInput"
         placeholder="Add a task..."
         maxlength="40"> <!-- Maximum character limit for tasks -->
-      <button onclick="newElement()" class="addBtn">Add</button> <!-- Button to add a new task; calls the "newElement" function -->
+        <button onclick="newElement()" class="addBtn">
+          <i class="fa-solid fa-check"></i>
+        </button> <!-- Button to add a new task; calls the "newElement" function -->
     </div>
 
     <!-- Task list -->

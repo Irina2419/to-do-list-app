@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap');
+
 * {
   box-sizing: border-box;
 }
@@ -7,7 +9,7 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
-  background-color: #ffffff;
+  background-color: #F5F5F7;
   color: #000;
   transition: background 0.3s, color 0.3s;
   display: flex;
@@ -32,26 +34,48 @@ html, body {
   font-size: 2.5rem;
 }
 
-#themeToggle {
+.theme-toggle {
   position: absolute;
-  right: 0;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  background-color: #F1C40F;
+  display: flex;
+  gap: 5px;
+  background: transparent;
   border: none;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  font-size: 24px;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: background 0.3s, transform 0.3s;
+  padding: 0;
+  box-shadow: none;
 }
 
-#themeToggle:hover {
-  background-color: #D4AC0D;
-  transform: scale(1.1);
+.theme-toggle button {
+  background: transparent;
+  border: none;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  border-radius: 50%;
+  padding: 0;
 }
+
+.theme-toggle button.moon {
+  font-size: 25px; /* Slightly larger than the sun */
+}
+
+
+.theme-toggle button.active {
+  transform: scale(1.4);
+}
+
+.theme-toggle button:hover {
+  transform: scale(1.2);
+}
+
 
 .tooltip {
   visibility: hidden;
@@ -199,7 +223,7 @@ h1 {
   padding: 12px;
   font-size: 16px;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 999px;
 }
 
 .addBtn {
@@ -208,9 +232,14 @@ h1 {
   background: #4A90E2;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 50%;
   font-size: 16px;
   cursor: pointer;
+}
+
+.addBtn i {
+  color: white;
+  font-size: 22px;
 }
 
 .addBtn:hover {
@@ -227,15 +256,18 @@ ul {
 }
 
 ul li {
-  padding: 5px 4px;
-  background: #f9f9f9;
+  padding: 2px 2px;
+  background: #F5F5F7;
+  line-height: 1.6;
   font-size: 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 4px;
-  border-radius: 4px;
+  border-radius: 999px;
+  font-family: 'Homemade Apple', cursive, sans-serif;
 }
+
 
 ul li:hover {
   background: #eee;
