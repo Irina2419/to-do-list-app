@@ -33,13 +33,16 @@ if (savedTheme === "dark" || savedTheme === "light") {
 }
 
 // Add a new task to the list (used by input field and drag/drop)
-function newElement(taskText = null) { // Modified to accept taskText for drag/drop
+function newElement(taskText = null) {
+  // Modified to accept taskText for drag/drop
   const input = document.getElementById("myInput");
   let inputValue;
 
-  if (taskText) { // If taskText is provided (from drag/drop)
+  if (taskText) {
+    // If taskText is provided (from drag/drop)
     inputValue = taskText.trim();
-  } else { // Otherwise, get from input field
+  } else {
+    // Otherwise, get from input field
     inputValue = input.value.trim();
   }
 
@@ -60,7 +63,8 @@ function newElement(taskText = null) { // Modified to accept taskText for drag/d
     inputValue.charAt(0).toUpperCase() + inputValue.slice(1).toLowerCase();
 
   addTaskToDOM(inputValue); // Calls the function to add the task to the DOM
-  if (!taskText) { // Only clear input if it wasn't from drag/drop
+  if (!taskText) {
+    // Only clear input if it wasn't from drag/drop
     input.value = "";
   }
   saveTasks(); // Calls the function to save the updated task list to localStorage
@@ -89,17 +93,19 @@ function addTaskToDOM(text, checked = false) {
 
   // Event handler for the close button
   span.onclick = function () {
-    const taskItem = this.parentElement;
+    const taskItem = this.parentElement; // The <li> element
 
+    // If the task was checked, play animation and fireworks
     if (taskItem.classList.contains("checked")) {
       taskItem.classList.add("removing"); // For spin-out animation
-      triggerFireworks(); // Call the new firework function
+      triggerFireworks(); // Call the firework function
       setTimeout(() => {
-        taskItem.remove();
+        taskItem.remove(); // Remove task after animation
         saveTasks();
       }, 700); // Match spinOut animation duration
     } else {
-      taskItem.remove(); // If not checked, just remove immediately
+      // If not checked, remove immediately without fireworks
+      taskItem.remove();
       saveTasks();
     }
   };
@@ -110,27 +116,15 @@ function addTaskToDOM(text, checked = false) {
 
 // Mark a task as complete or incomplete by clicking on the list item itself
 document.getElementById("myUL").addEventListener("click", function (e) {
-  const listItem = e.target.closest('li'); // Find the closest 'li' ancestor of the clicked element
+  const listItem = e.target.closest('li'); // Find the closest 'li' ancestor
 
-  // If an 'li' was found and the click was not on the 'close' button
+  // CRITICAL: Only proceed if a list item was clicked AND it was NOT the 'close' button
   if (listItem && !e.target.classList.contains('close')) {
-    // If clicking on a checked item, remove it and trigger fireworks
-    if (listItem.classList.contains("checked")) {
-      listItem.classList.add("removing"); // For spin-out animation
-      triggerFireworks(); // Call the new firework function
-
-      setTimeout(() => {
-        listItem.remove();
-        saveTasks();
-      }, 700); // Match spinOut animation duration
-    } else {
-      // If clicking on an unchecked item, mark it as checked
-      listItem.classList.add("checked");
-      saveTasks();
-    }
+    listItem.classList.toggle("checked"); // Toggle the "checked" class
+    saveTasks(); // Save the updated task list
+    // Removed fireworks here, as they should only trigger on removal by 'x'
   }
 });
-
 
 // Save tasks to localStorage
 function saveTasks() {
@@ -164,7 +158,7 @@ function triggerFireworks() {
   }
 
   // Clear any existing content in the overlay first
-  fireworkOverlay.innerHTML = '';
+  fireworkOverlay.innerHTML = "";
 
   // 1. Create and append the message
   const messageDiv = document.createElement("div");
@@ -177,11 +171,46 @@ function triggerFireworks() {
 
   // Custom color sets for different firework types
   const fireworkColorSets = [
-    { c1: 'yellow', c2: 'khaki', c3: 'white', c4: 'lime', c5: 'gold', c6: 'mediumseagreen' },
-    { c1: 'pink', c2: 'violet', c3: 'fuchsia', c4: 'orchid', c5: 'plum', c6: 'lavender' },
-    { c1: 'cyan', c2: 'lightcyan', c3: 'lightblue', c4: 'PaleTurquoise', c5: 'SkyBlue', c6: 'lavender' },
-    { c1: 'red', c2: 'orange', c3: 'yellow', c4: 'gold', c5: 'darkorange', c6: 'salmon' },
-    { c1: 'greenyellow', c2: 'lime', c3: 'darkgreen', c4: 'forestgreen', c5: 'lightgreen', c6: 'chartreuse' }
+    {
+      c1: "yellow",
+      c2: "khaki",
+      c3: "white",
+      c4: "lime",
+      c5: "gold",
+      c6: "mediumseagreen",
+    },
+    {
+      c1: "pink",
+      c2: "violet",
+      c3: "fuchsia",
+      c4: "orchid",
+      c5: "plum",
+      c6: "lavender",
+    },
+    {
+      c1: "cyan",
+      c2: "lightcyan",
+      c3: "lightblue",
+      c4: "PaleTurquoise",
+      c5: "SkyBlue",
+      c6: "lavender",
+    },
+    {
+      c1: "red",
+      c2: "orange",
+      c3: "yellow",
+      c4: "gold",
+      c5: "darkorange",
+      c6: "salmon",
+    },
+    {
+      c1: "greenyellow",
+      c2: "lime",
+      c3: "darkgreen",
+      c4: "forestgreen",
+      c5: "lightgreen",
+      c6: "chartreuse",
+    },
   ];
 
   const screenWidth = window.innerWidth;
@@ -192,15 +221,16 @@ function triggerFireworks() {
     const fireworkDiv = document.createElement("div");
     fireworkDiv.className = "firework";
 
-    const colorSet = fireworkColorSets[Math.floor(Math.random() * fireworkColorSets.length)];
+    const colorSet =
+      fireworkColorSets[Math.floor(Math.random() * fireworkColorSets.length)];
 
     // Set CSS variables for colors
-    fireworkDiv.style.setProperty('--color1', colorSet.c1);
-    fireworkDiv.style.setProperty('--color2', colorSet.c2);
-    fireworkDiv.style.setProperty('--color3', colorSet.c3);
-    fireworkDiv.style.setProperty('--color4', colorSet.c4);
-    fireworkDiv.style.setProperty('--color5', colorSet.c5);
-    fireworkDiv.style.setProperty('--color6', colorSet.c6);
+    fireworkDiv.style.setProperty("--color1", colorSet.c1);
+    fireworkDiv.style.setProperty("--color2", colorSet.c2);
+    fireworkDiv.style.setProperty("--color3", colorSet.c3);
+    fireworkDiv.style.setProperty("--color4", colorSet.c4);
+    fireworkDiv.style.setProperty("--color5", colorSet.c5);
+    fireworkDiv.style.setProperty("--color6", colorSet.c6);
 
     // Randomize initial launch position (from bottom of screen)
     const launchX = Math.random() * screenWidth; // Launch from any X position
@@ -212,11 +242,11 @@ function triggerFireworks() {
 
     // Calculate the CSS variables for the animation
     fireworkDiv.style.left = `${launchX}px`; // Physical starting X for the element
-    fireworkDiv.style.top = `${launchY}px`;   // Physical starting Y for the element
+    fireworkDiv.style.top = `${launchY}px`; // Physical starting Y for the element
 
-    fireworkDiv.style.setProperty('--initialY', `-${launchY - burstTargetY}px`); // Distance up from launch point to burst point
-    fireworkDiv.style.setProperty('--y', `-${launchY - burstTargetY}px`); // Same as above for translateY in animation
-    fireworkDiv.style.setProperty('--x', `${burstTargetX - launchX}px`); // Horizontal shift to burst point
+    fireworkDiv.style.setProperty("--initialY", `-${launchY - burstTargetY}px`); // Distance up from launch point to burst point
+    fireworkDiv.style.setProperty("--y", `-${launchY - burstTargetY}px`); // Same as above for translateY in animation
+    fireworkDiv.style.setProperty("--x", `${burstTargetX - launchX}px`); // Horizontal shift to burst point
 
     // Random animation delay for staggered appearance
     fireworkDiv.style.animationDelay = `${Math.random() * 1.5}s`; // Staggered entry
@@ -248,55 +278,54 @@ function triggerFireworks() {
   setTimeout(() => {
     fireworkOverlay.classList.remove("active"); // Start fading out the overlay
     setTimeout(() => {
-      fireworkOverlay.innerHTML = ''; // Clean up after fade out
+      fireworkOverlay.innerHTML = ""; // Clean up after fade out
     }, 500); // Allow time for CSS transition
   }, 4000); // Total time to display fireworks and message before fading out (adjust as needed)
 }
 
-
 // --- Drag and Drop Functionality ---
-const addBtnDropTarget = document.getElementById('addBtnDropTarget');
-const draggableCards = document.querySelectorAll('.draggable-card');
+const addBtnDropTarget = document.getElementById("addBtnDropTarget");
+const draggableCards = document.querySelectorAll(".draggable-card");
 let draggedItem = null;
 
 // Add dragstart listener to each draggable card
-draggableCards.forEach(card => {
-    card.addEventListener('dragstart', (e) => {
-        draggedItem = card;
-        e.dataTransfer.setData('text/plain', card.dataset.task); // Store the task text
-        // Add a class for styling the dragged item if needed
-        card.classList.add('dragging');
-    });
+draggableCards.forEach((card) => {
+  card.addEventListener("dragstart", (e) => {
+    draggedItem = card;
+    e.dataTransfer.setData("text/plain", card.dataset.task); // Store the task text
+    // Add a class for styling the dragged item if needed
+    card.classList.add("dragging");
+  });
 
-    card.addEventListener('dragend', () => {
-        draggedItem = null;
-        card.classList.remove('dragging');
-    });
+  card.addEventListener("dragend", () => {
+    draggedItem = null;
+    card.classList.remove("dragging");
+  });
 });
 
 // Add dragover listener to the add button (drop target)
-addBtnDropTarget.addEventListener('dragover', (e) => {
-    e.preventDefault(); // Prevent default to allow drop
-    addBtnDropTarget.classList.add('drag-over'); // Add visual feedback
+addBtnDropTarget.addEventListener("dragover", (e) => {
+  e.preventDefault(); // Prevent default to allow drop
+  addBtnDropTarget.classList.add("drag-over"); // Add visual feedback
 });
 
 // Add dragleave listener to the add button
-addBtnDropTarget.addEventListener('dragleave', () => {
-    addBtnDropTarget.classList.remove('drag-over'); // Remove visual feedback
+addBtnDropTarget.addEventListener("dragleave", () => {
+  addBtnDropTarget.classList.remove("drag-over"); // Remove visual feedback
 });
 
 // Add drop listener to the add button
-addBtnDropTarget.addEventListener('drop', (e) => {
-    e.preventDefault(); // Prevent default browser drop behavior
-    addBtnDropTarget.classList.remove('drag-over'); // Remove visual feedback
+addBtnDropTarget.addEventListener("drop", (e) => {
+  e.preventDefault(); // Prevent default browser drop behavior
+  addBtnDropTarget.classList.remove("drag-over"); // Remove visual feedback
 
-    const taskText = e.dataTransfer.getData('text/plain');
-    if (taskText) {
-        newElement(taskText); // Use newElement to add the task
-        // Optionally remove the dragged card from the DOM
-        if (draggedItem) {
-            draggedItem.remove();
-            // You might want to save/load draggable cards if they're persistent
-        }
+  const taskText = e.dataTransfer.getData("text/plain");
+  if (taskText) {
+    newElement(taskText); // Use newElement to add the task
+    // Optionally remove the dragged card from the DOM
+    if (draggedItem) {
+      draggedItem.remove();
+      // You might want to save/load draggable cards if they're persistent
     }
+  }
 });
