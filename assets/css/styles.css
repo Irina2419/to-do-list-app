@@ -278,9 +278,9 @@ ul {
 }
 
 ul li {
-  padding: 8px 12px;
+  padding: 12px 12px;
   background: #F5F5F7;
-  line-height: 1.6;
+  line-height: 2;
   font-size: 18px;
   display: flex;
   align-items: center;
