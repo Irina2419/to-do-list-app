@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
 
 * {
   box-sizing: border-box;
@@ -172,7 +172,7 @@ li.removing {
   gap: 10px;
   width: 100%;
   max-width: 66%;
-  margin: 0 auto 20px auto;
+  margin: 0 auto 10px auto;
   box-sizing: border-box;
   align-items: center;
   /* Centers items vertically when flex-direction is row */
@@ -183,12 +183,12 @@ li.removing {
 #completion-note {
   width: 100%;
   max-width: 66%; /* Keep consistent with input and tasks */
-  margin: 10px auto 20px auto; /* Add margin above and below, horizontal centering */
+  margin: 5px auto 20px auto; /* Add margin above and below, horizontal centering */
   text-align: center; /* Horizontally center the text */
-  font-family: 'Homemade Apple', cursive, sans-serif; /* Same font as tasks */
-  font-size: 1.1rem; /* Adjust font size as needed, using rem for responsiveness */
+  font-family: 'Caveat', cursive, sans-serif; /* Same font as tasks */
+  font-size: 1.5rem; /* Adjust font size as needed, using rem for responsiveness */
   color:  #E74C3C;
-  font-weight: bold;
+  font-weight: bold; /* Make it bold for emphasis */
   line-height: 1.5; /* Allow text to wrap nicely onto multiple lines */
 }
 
@@ -201,33 +201,22 @@ body.dark .completion-note {
   width: 100%;
   padding: 12px 16px;
   font-size: 16px;
-  border: 1px solid #ddd;
-  /* Light gray border */
-  border-radius: 999px;
-  /* Fully rounded sides */
-  outline: none;
-  /* Prevents default black border on focus */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  /* Light bottom shadow */
+  border: 1px solid #ddd; /* Light gray border */
+  border-radius: 999px; /* Fully rounded sides */
+  outline: none; /* Prevents default black border on focus */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Light bottom shadow */
   transition: box-shadow 0.2s ease;
 }
 
 /* --- CORRECTED AND RESPONSIVE .addBtn STYLES --- */
 .addBtn {
-  width: 3.5rem;
-  /* Base size for desktop, scales with root font size (e.g., 56px if 1rem=16px) */
-  aspect-ratio: 1 / 1;
-  /* Ensures height equals width for a perfect circle */
-  border-radius: 50%;
-  /* Makes it a perfect circle */
+  width: 3.5rem; /* Base size for desktop, scales with root font size (e.g., 56px if 1rem=16px) */
+  aspect-ratio: 1 / 1; /* Ensures height equals width for a perfect circle */
+  border-radius: 50%; /* Makes it a perfect circle */
   display: flex;
-  justify-content: center;
-  /* Center icon horizontally */
-  align-items: center;
-  /* Center icon vertically */
-  flex-shrink: 0;
-  /* Prevent it from shrinking in flex containers */
-
+  justify-content: center; /* Center icon horizontally */
+  align-items: center; /* Center icon vertically */
+  flex-shrink: 0; /* Prevent it from shrinking in flex containers */
   background: #4A90E2;
   color: white;
   border: none;
@@ -266,7 +255,7 @@ ul {
   max-width: 90%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 10px;
   /* CRITICAL: Allow UL to grow and shrink, but not push content beyond its boundaries */
   flex-grow: 1;
@@ -278,16 +267,16 @@ ul {
 }
 
 ul li {
-  padding: 12px 12px;
+  padding: 15px 12px;
   background: #F5F5F7;
-  line-height: 2;
-  font-size: 18px;
+  line-height: 1;
+  font-size: 25px;
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 0;
   border-radius: 8px;
-  font-family: 'Homemade Apple', cursive, sans-serif;
+  font-family: 'Caveat', cursive, sans-serif;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background 0.2s, box-shadow 0.2s;
   flex-shrink: 1; /* Allow it to shrink if needed, but not collapse */
@@ -306,7 +295,6 @@ ul li.checked .task-text {
 
 ul li .task-text {
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
 
@@ -358,12 +346,9 @@ footer {
 }
 
 footer p {
-  margin: 0;
-  /* CRITICAL: Remove default top and bottom margins from the paragraph */
-  padding: 0;
-  /* Ensure no extra padding from the paragraph itself */
-  line-height: 1;
-  /* Ensure line height doesn't add extra space */
+  margin: 0; /* CRITICAL: Remove default top and bottom margins from the paragraph */
+  padding: 0; /* Ensure no extra padding from the paragraph itself */
+  line-height: 1; /* Ensure line height doesn't add extra space */
 }
 
 /* Responsive Overrides (Adjust button size for different screens) */
@@ -371,20 +356,16 @@ footer p {
 
   /* Tablets and smaller */
   .addBtn {
-    width: 3rem;
-    /* Slightly smaller (e.g., 48px) */
+    width: 3rem; /* Slightly smaller (e.g., 48px) */
   }
 
   .addBtn i {
-    font-size: 1.3rem;
-    /* Adjust icon size */
+    font-size: 1.3rem; /* Adjust icon size */
   }
 
   #myDIV {
-    flex-direction: row;
-    /* Keep input and button side-by-side unless very small */
-    justify-content: center;
-    /* Center them horizontally */
+    flex-direction: row; /* Keep input and button side-by-side unless very small */
+    justify-content: center; /* Center them horizontally */
     align-items: center;
   }
 }
@@ -393,22 +374,17 @@ footer p {
 
   /* Mobile phones */
   #myDIV {
-    flex-direction: column;
-    /* Stack input and button */
-    align-items: stretch;
-    /* Stretch input to full width */
+    flex-direction: column; /* Stack input and button */
+    align-items: stretch; /* Stretch input to full width */
   }
 
   #myInput {
-    margin-bottom: 10px;
-    /* Add space below input when stacked */
+    margin-bottom: 10px; /* Add space below input when stacked */
   }
 
   .addBtn {
-    width: 3.5rem;
-    /* Revert to a slightly larger size for easier tapping on mobile */
-    margin: 0 auto;
-    /* Center button when stacked */
+    width: 3.5rem; /* Revert to a slightly larger size for easier tapping on mobile */
+    margin: 0 auto; /* Center button when stacked */
   }
 
   .addBtn i {
@@ -416,8 +392,7 @@ footer p {
   }
 
   .header-row h1 {
-    padding-top: 50px;
-    /* More space from the top for the H1 */
+    padding-top: 50px; /* More space from the top for the H1 */
   }
   .theme-toggle {
   top: 15px; /* Position from the top of the header-row, above the H1 */
@@ -449,32 +424,23 @@ footer p {
   max-width: 66%;
   margin: 20px auto 0 auto;
   padding: 15px;
-  background-color: #F5F5F7;
-  /* Light gray background */
-  border: none;
-  /* Remove any default border */
-  outline: none;
-  /* Remove any default outline */
-  background: #F5F5F7;
-  /* Use shorthand to potentially override inherited background images/gradients */
+  background-color: #F5F5F7; /* Light gray background */
+  border: none; /* Remove any default border */
+  outline: none; /* Remove any default outline */
+  background: #F5F5F7; /* Use shorthand to potentially override inherited background images/gradients */
   border-radius: 12px;
-  box-shadow: none;
-  /* No shadow for a cleaner look */
-  margin-top: auto;
-  /* Pushes this section to the bottom of the page-wrapper flex container */
-  margin-bottom: 10px;
-  /* Adjust if needed */
-  flex-shrink: 0;
-  /* CRITICAL: Prevent this section from shrinking out of view */
-  z-index: 10;
-  /* Ensure draggable section is above most normal content */
-  pointer-events: auto;
-  /* CRITICAL: Ensure elements inside are always interactive */
+  box-shadow: none; /* No shadow for a cleaner look */
+  margin-top: auto; /* Pushes this section to the bottom of the page-wrapper flex container */
+  margin-bottom: 10px; /* Adjust if needed */
+  flex-shrink: 0; /* CRITICAL: Prevent this section from shrinking out of view */
+  z-index: 10; /* Ensure draggable section is above most normal content */
+  pointer-events: auto; /* CRITICAL: Ensure elements inside are always interactive */
 }
 
 .draggable-cards-section h2 {
-  font-family: 'Homemade Apple', cursive, sans-serif;
+  font-family: 'Caveat', cursive, sans-serif;
   color: #4A90E2;
+  font-size: 3rem;
 }
 
 .draggable-card {
@@ -503,8 +469,8 @@ footer p {
 }
 
 .draggable-card .card-title {
-  font-family: 'Homemade Apple', cursive, sans-serif;
-  font-size: 1rem;
+  font-family: 'Caveat', cursive, sans-serif;
+  font-size: 1.5rem;
   color: white;
   /* Changed to white for better contrast with pink background */
   margin-top: 0;
