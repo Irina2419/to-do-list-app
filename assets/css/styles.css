@@ -20,10 +20,8 @@ html, body {
 .page-wrapper {
   flex: 1;
   padding: 20px;
-  /* --- NEW: Make page-wrapper a flex container to control its children's vertical alignment --- */
   display: flex;
   flex-direction: column;
-  /* --- END NEW --- */
 }
 
 .header-row {
@@ -140,12 +138,13 @@ li.removing {
 /* Input Section */
 #myDIV {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Default for small screens, will change to row for larger */
   gap: 10px;
   width: 100%;
   max-width: 66%;
   margin: 0 auto 20px auto;
   box-sizing: border-box;
+  align-items: center; /* Centers items vertically when flex-direction is row */
 }
 
 #myInput {
@@ -159,25 +158,43 @@ li.removing {
   transition: box-shadow 0.2s ease;
 }
 
+/* --- CORRECTED AND RESPONSIVE .addBtn STYLES --- */
 .addBtn {
-  width: 100%;
-  padding: 12px;
+  width: 3.5rem; /* Base size for desktop, scales with root font size (e.g., 56px if 1rem=16px) */
+  aspect-ratio: 1 / 1; /* Ensures height equals width for a perfect circle */
+  border-radius: 50%; /* Makes it a perfect circle */
+  display: flex;
+  justify-content: center; /* Center icon horizontally */
+  align-items: center; /* Center icon vertically */
+  flex-shrink: 0; /* Prevent it from shrinking in flex containers */
+
   background: #4A90E2;
   color: white;
   border: none;
-  border-radius: 50%;
-  font-size: 16px;
   cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .addBtn i {
+  font-size: 1.5rem; /* Icon size scales with button */
+  line-height: 1; /* Removes extra space above/below icon */
   color: white;
-  font-size: 22px;
 }
 
 .addBtn:hover {
   background-color: #357ABD;
+  transform: translateY(-2px);
 }
+
+/* Style for the drop target when an item is being dragged over it */
+.addBtn.drag-over {
+  background-color: #28a745;
+  box-shadow: 0 0 15px rgba(40, 167, 69, 0.7);
+  transform: scale(1.1);
+}
+/* --- END CORRECTED AND RESPONSIVE .addBtn STYLES --- */
+
 
 /* Task List */
 ul {
@@ -186,24 +203,24 @@ ul {
   padding: 0;
   width: 100%;
   max-width: 66%;
-  display: flex;         /* Make it a flex container */
-  flex-wrap: wrap;       /* Allow items to wrap to the next line */
-  justify-content: flex-start; /* Align items to the start (left) */
-  gap: 10px;             /* Add a gap BETWEEN the li elements */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-bottom: auto; /* Push ul content to the top within page-wrapper */
 }
 
 ul li {
-  padding: 8px 12px; /* Corrected padding for good spacing */
+  padding: 8px 12px;
   background: #F5F5F7;
   line-height: 1.6;
   font-size: 18px;
   display: flex;
   align-items: center;
-  gap: 10px; /* Gap BETWEEN task text and close button */
-  margin-bottom: 0; /* Managed by ul's gap */
+  gap: 10px;
+  margin-bottom: 0;
   border-radius: 999px;
   font-family: 'Homemade Apple', cursive, sans-serif;
-  /* width: auto; Let content define width unless min/max is needed */
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   transition: background 0.2s, box-shadow 0.2s;
 }
@@ -219,20 +236,18 @@ ul li.checked .task-text {
 }
 
 ul li .task-text {
-  /* Let text content take its natural width */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* Ensure the .close button has the correct styles and doesn't shrink */
 .close {
   color: #E74C3C;
   font-weight: bold;
   cursor: pointer;
   font-size: 20px;
-  flex-shrink: 0; /* Prevents the close button from shrinking */
-  padding: 0 5px; /* Add a small padding to the close button itself */
+  flex-shrink: 0;
+  padding: 0 5px;
 }
 
 .close:hover {
@@ -255,45 +270,70 @@ body.dark ul li:hover {
 
 /* Footer */
 footer {
-  background-color: #4A90E2; /* Blue background */
-  color: white; /* White text */
-  text-align: center; /* Centers the text */
-  padding: 10px 0; /* Adds padding above and below the text */
-  font-size: 14px; /* Small font size */
-  width: 100%; /* Ensures the footer spans the full width of the viewport */
-  box-sizing: border-box; /* Includes padding in the width calculation */
-  overflow-x: hidden; /* Prevents horizontal scrolling caused by the footer */
+  background-color: #4A90E2;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
-/* Responsive */
-@media (min-width: 600px) {
-  #myDIV {
-    flex-direction: row;
-  }
-
-  #myInput {
-    flex: 1;
-  }
-
+/* Responsive Overrides (Adjust button size for different screens) */
+@media (max-width: 768px) { /* Tablets and smaller */
   .addBtn {
-    width: auto;
-    white-space: nowrap;
+    width: 3rem; /* Slightly smaller (e.g., 48px) */
+  }
+  .addBtn i {
+    font-size: 1.3rem; /* Adjust icon size */
+  }
+  #myDIV {
+    flex-direction: row; /* Keep input and button side-by-side unless very small */
+    justify-content: center; /* Center them horizontally */
+    align-items: center;
   }
 }
 
-/* NEW DRAG & DROP STYLES (Bootstrap overrides/additions) */
+@media (max-width: 480px) { /* Mobile phones */
+  #myDIV {
+    flex-direction: column; /* Stack input and button */
+    align-items: stretch; /* Stretch input to full width */
+  }
+  #myInput {
+    margin-bottom: 10px; /* Add space below input when stacked */
+  }
+  .addBtn {
+    width: 3.5rem; /* Revert to a slightly larger size for easier tapping on mobile */
+    margin: 0 auto; /* Center button when stacked */
+  }
+  .addBtn i {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 600px) { /* Standard desktop layout */
+  #myDIV {
+    flex-direction: row; /* Input and button side-by-side */
+    align-items: center;
+    gap: 10px;
+  }
+  #myInput {
+    flex: 1; /* Input takes remaining space */
+  }
+}
+
+
+/* DRAG & DROP STYLES */
 .draggable-cards-section {
-  /* Bootstrap container and row will handle most layout */
-  width: 100%; /* Ensure it takes full width of its parent */
-  max-width: 66%; /* Keep consistent with other sections */
-  margin: 20px auto 0 auto; /* Push to bottom of flex container */
+  width: 100%;
+  max-width: 66%;
+  margin: 20px auto 0 auto;
   padding: 15px;
   background-color: #f0f0f0;
   border-radius: 12px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  /* --- NEW: Push this section to the bottom of the flex page-wrapper --- */
-  margin-top: auto;
-  /* --- END NEW --- */
+  margin-top: auto; /* Pushes this section to the bottom of the page-wrapper flex container */
 }
 
 .draggable-cards-section h2 {
@@ -316,12 +356,12 @@ footer {
 }
 
 .draggable-card .card-body {
-  padding: 10px; /* Adjust padding inside card */
+  padding: 10px;
 }
 
 .draggable-card .card-title {
   font-family: 'Homemade Apple', cursive, sans-serif;
-  font-size: 1rem; /* Adjust font size */
+  font-size: 1rem;
   color: #333;
   margin-bottom: 0;
 }
@@ -340,9 +380,9 @@ footer {
 
 /* Style for the drop target when an item is being dragged over it */
 .addBtn.drag-over {
-  background-color: #28a745; /* Green highlight */
+  background-color: #28a745;
   box-shadow: 0 0 15px rgba(40, 167, 69, 0.7);
-  transform: scale(1.1); /* Slightly enlarge */
+  transform: scale(1.1);
 }
 
 /* Dark mode for draggable cards */
@@ -369,23 +409,20 @@ body.dark .draggable-card:hover {
 }
 
 
-/* NEW FIREWORK STYLES - Place these at the very end of your styles.css */
-/* This will be the main container for the fireworks and the message.
-   It needs to cover the full screen and center its content. */
+/* NEW FIREWORK STYLES */
 .firework-overlay-container {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 1000; /* Ensure it's on top of other content */
-  pointer-events: none; /* Allows clicks to pass through to elements beneath */
-  overflow: hidden; /* Prevents scrollbars */
-  background: transparent; /* Keep background transparent to see your page */
-  display: flex; /* Use flexbox to center children */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  /* Initially hidden, will be shown by JS */
+  z-index: 1000;
+  pointer-events: none;
+  overflow: hidden;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
@@ -397,7 +434,6 @@ body.dark .draggable-card:hover {
     transition: opacity 0.3s ease-in-out;
 }
 
-/* Firework message styling (RE-IMPLEMENTED to be part of the overlay container) */
 .firework-message {
   background: #f1c40f;
   color: #2c3e50;
@@ -405,13 +441,12 @@ body.dark .draggable-card:hover {
   padding: 15px 25px;
   border-radius: 12px;
   box-shadow: 0 0 30px #f39c12;
-  position: relative; /* Positioned within the flex container */
-  z-index: 1001; /* Above fireworks */
+  position: relative;
+  z-index: 1001;
   text-align: center;
   white-space: nowrap;
-  pointer-events: auto; /* Allow message to be clickable/selectable */
+  pointer-events: auto;
 
-  /* Fade out animation for the message itself */
   animation: fadeOutMessage 2s 1s forwards;
 }
 
@@ -422,36 +457,31 @@ body.dark .draggable-card:hover {
   }
 }
 
-/* New Firework Animation Keyframes */
 @keyframes firework {
   0% { transform: translate(var(--x), var(--initialY)); width: var(--initialSize); opacity: 1; }
   50% { width: 0.5vmin; opacity: 1; }
-  100% { transform: translate(var(--x), var(--finalY)); width: var(--finalSize); opacity: 0; } /* Corrected finalY */
+  100% { transform: translate(var(--x), var(--finalY)); width: var(--finalSize); opacity: 0; }
 }
 
-/* Base styles for each individual firework element */
 .firework,
 .firework::before,
 .firework::after {
   --initialSize: 0.5vmin;
   --finalSize: 45vmin;
   --particleSize: 0.2vmin;
-  /* Colors will be set by JavaScript dynamically */
-  --y: -30vmin; /* Initial vertical position of the burst relative to its launch point */
-  --x: -50%; /* Initial horizontal position of the burst relative to its launch point */
-  --initialY: 60vmin; /* How high the firework "launches" before bursting */
+  --y: -30vmin;
+  --x: -50%;
+  --initialY: 60vmin;
   content: "";
-  animation: firework 2s infinite; /* Animation will be triggered by JS with delays */
-  position: absolute; /* Positioned relative to .firework-overlay-container (or its wrapper) */
-  /* top and left will be set by JS dynamically to place them */
-  transform: translate(-50%, var(--y)); /* Center the element's own sprite, then move by --y */
+  animation: firework 2s infinite;
+  position: absolute;
+  transform: translate(-50%, var(--y));
   width: var(--initialSize);
   aspect-ratio: 1;
   background-size: var(--initialSize) var(--initialSize);
   background-repeat: no-repeat;
 }
 
-/* Base background gradients for the firework particles - these use the CSS variables */
 .firework {
     background:
       radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 50% 0%,
