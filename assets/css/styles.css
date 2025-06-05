@@ -180,6 +180,23 @@ li.removing {
   /* Prevent input section from shrinking */
 }
 
+#completion-note {
+  width: 100%;
+  max-width: 66%; /* Keep consistent with input and tasks */
+  margin: 10px auto 20px auto; /* Add margin above and below, horizontal centering */
+  text-align: center; /* Horizontally center the text */
+  font-family: 'Homemade Apple', cursive, sans-serif; /* Same font as tasks */
+  font-size: 1.1rem; /* Adjust font size as needed, using rem for responsiveness */
+  color:  #E74C3C;
+  font-weight: bold;
+  line-height: 1.5; /* Allow text to wrap nicely onto multiple lines */
+}
+
+/* Dark mode for the completion note */
+body.dark .completion-note {
+  color: #ccc; /* Lighter color for dark mode */
+}
+
 #myInput {
   width: 100%;
   padding: 12px 16px;
@@ -239,9 +256,6 @@ li.removing {
   transform: scale(1.1);
 }
 
-/* --- END CORRECTED AND RESPONSIVE .addBtn STYLES --- */
-
-
 /* Task List */
 ul {
   list-style-type: none;
@@ -272,10 +286,12 @@ ul li {
   align-items: center;
   gap: 10px;
   margin-bottom: 0;
-  border-radius: 999px;
+  border-radius: 8px;
   font-family: 'Homemade Apple', cursive, sans-serif;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background 0.2s, box-shadow 0.2s;
+  flex-shrink: 1; /* Allow it to shrink if needed, but not collapse */
+  flex-basis: content; /* Let content dictate its base size */
 }
 
 ul li:hover {
