@@ -20,6 +20,10 @@ html, body {
 .page-wrapper {
   flex: 1;
   padding: 20px;
+  /* --- NEW: Make page-wrapper a flex container to control its children's vertical alignment --- */
+  display: flex;
+  flex-direction: column;
+  /* --- END NEW --- */
 }
 
 .header-row {
@@ -103,7 +107,7 @@ html, body {
   color: #4A90E2; /* Your existing blue */
   text-align: center;
   margin: 0;
-  text-shadow: 3px 3px 0 #F1C40F, 6px 6px 0 #FF69B4;
+  text-shadow: 3px 3px 0 #F1C40F, 6px 6px 0 #FF69B4; /* Ensure this is the bright pink */
   animation: shadow-dance 2s infinite ease-in-out;
 }
 
@@ -132,80 +136,6 @@ li.removing {
   animation: spinOut 0.7s ease forwards;
 }
 
-
-/* Firework burst animation */
-@keyframes fireworks {
-  0% {
-    transform: translateX(-50%) scale(0.2);
-    opacity: 0;
-  }
-  50% {
-    transform: translateX(-50%) scale(1.2);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(-50%) scale(1);
-  }
-}
-
-/* Fade out */
-@keyframes fadeOut {
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-
-@keyframes burst {
-  0% {
-    transform: scale(1) translate(0, 0);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(0.5) translate(var(--x), var(--y));
-    opacity: 0;
-  }
-}
-
-.firework-container {
-  position: fixed;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-  pointer-events: none;
-}
-
-/* Firework message styling */
-.firework-message {
-  background: #f1c40f;
-  color: #2c3e50;
-  font-size: 1.5rem;
-  padding: 15px 25px;
-  border-radius: 12px;
-  box-shadow: 0 0 30px #f39c12;
-  animation: fadeOut 2s 1s forwards;
-  position: relative;
-  z-index: 1001;
-}
-
-.firework-dot {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: #ff005e;
-  animation: burst 2s ease-out forwards;
-}
-
-body.dark .tooltip {
-  color: #fff;
-}
-
-h1 {
-  color: #4A90E2;
-  margin: 0 0 20px 0;
-}
 
 /* Input Section */
 #myDIV {
@@ -263,17 +193,17 @@ ul {
 }
 
 ul li {
-  padding: 8px 12px;
+  padding: 8px 12px; /* Corrected padding for good spacing */
   background: #F5F5F7;
   line-height: 1.6;
   font-size: 18px;
   display: flex;
   align-items: center;
-  gap: 10px;             /* Gap BETWEEN task text and close button */
-  margin-bottom: 0;      /* REMOVE margin-bottom if gap on ul is used, or adjust as needed */
+  gap: 10px; /* Gap BETWEEN task text and close button */
+  margin-bottom: 0; /* Managed by ul's gap */
   border-radius: 999px;
   font-family: 'Homemade Apple', cursive, sans-serif;
-  /* REMOVE this line: width: 48%; */ /* <-- REMOVE THIS LINE */
+  /* width: auto; Let content define width unless min/max is needed */
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   transition: background 0.2s, box-shadow 0.2s;
 }
@@ -289,9 +219,7 @@ ul li.checked .task-text {
 }
 
 ul li .task-text {
-  /* No flex-grow: 1 needed if li is not fixed width */
-  /* If you want the text to expand within the padding but not force the li to expand more than needed,
-     you can use min-width and max-width if desired, but letting it shrink/grow naturally is simpler. */
+  /* Let text content take its natural width */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -303,18 +231,8 @@ ul li .task-text {
   font-weight: bold;
   cursor: pointer;
   font-size: 20px;
-  flex-shrink: 0;
-  padding: 0 5px;
-}
-
-/* The media query for smaller screens can be simplified or removed,
-   as the default behavior will now be responsive. */
-@media (max-width: 768px) {
-  ul li {
-    /* If you still want a minimum width for very short tasks on small screens, you can add it here.
-       Otherwise, this block can be removed as the default flex behavior will handle it. */
-    /* min-width: 150px; */
-  }
+  flex-shrink: 0; /* Prevents the close button from shrinking */
+  padding: 0 5px; /* Add a small padding to the close button itself */
 }
 
 .close:hover {
@@ -361,4 +279,225 @@ footer {
     width: auto;
     white-space: nowrap;
   }
+}
+
+/* NEW DRAG & DROP STYLES (Bootstrap overrides/additions) */
+.draggable-cards-section {
+  /* Bootstrap container and row will handle most layout */
+  width: 100%; /* Ensure it takes full width of its parent */
+  max-width: 66%; /* Keep consistent with other sections */
+  margin: 20px auto 0 auto; /* Push to bottom of flex container */
+  padding: 15px;
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  /* --- NEW: Push this section to the bottom of the flex page-wrapper --- */
+  margin-top: auto;
+  /* --- END NEW --- */
+}
+
+.draggable-cards-section h2 {
+  font-family: 'Homemade Apple', cursive, sans-serif;
+  color: #4A90E2;
+}
+
+.draggable-card {
+  cursor: grab;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+/* Bootstrap card overrides */
+.draggable-card.card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  height: 100%; /* Ensure cards in a row have same height */
+}
+
+.draggable-card .card-body {
+  padding: 10px; /* Adjust padding inside card */
+}
+
+.draggable-card .card-title {
+  font-family: 'Homemade Apple', cursive, sans-serif;
+  font-size: 1rem; /* Adjust font size */
+  color: #333;
+  margin-bottom: 0;
+}
+
+.draggable-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  background-color: #f9f9f9;
+}
+
+.draggable-card:active {
+  cursor: grabbing;
+  transform: scale(0.98);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+/* Style for the drop target when an item is being dragged over it */
+.addBtn.drag-over {
+  background-color: #28a745; /* Green highlight */
+  box-shadow: 0 0 15px rgba(40, 167, 69, 0.7);
+  transform: scale(1.1); /* Slightly enlarge */
+}
+
+/* Dark mode for draggable cards */
+body.dark .draggable-cards-section {
+  background-color: #3b4b5c;
+  color: white;
+}
+
+body.dark .draggable-cards-section h2 {
+  color: white;
+}
+
+body.dark .draggable-card.card {
+  background-color: #465a6b;
+  border-color: #556b80;
+}
+
+body.dark .draggable-card .card-title {
+  color: white;
+}
+
+body.dark .draggable-card:hover {
+  background-color: #556b80;
+}
+
+
+/* NEW FIREWORK STYLES - Place these at the very end of your styles.css */
+/* This will be the main container for the fireworks and the message.
+   It needs to cover the full screen and center its content. */
+.firework-overlay-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000; /* Ensure it's on top of other content */
+  pointer-events: none; /* Allows clicks to pass through to elements beneath */
+  overflow: hidden; /* Prevents scrollbars */
+  background: transparent; /* Keep background transparent to see your page */
+  display: flex; /* Use flexbox to center children */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  /* Initially hidden, will be shown by JS */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
+}
+
+.firework-overlay-container.active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Firework message styling (RE-IMPLEMENTED to be part of the overlay container) */
+.firework-message {
+  background: #f1c40f;
+  color: #2c3e50;
+  font-size: 1.5rem;
+  padding: 15px 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 30px #f39c12;
+  position: relative; /* Positioned within the flex container */
+  z-index: 1001; /* Above fireworks */
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: auto; /* Allow message to be clickable/selectable */
+
+  /* Fade out animation for the message itself */
+  animation: fadeOutMessage 2s 1s forwards;
+}
+
+@keyframes fadeOutMessage {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* New Firework Animation Keyframes */
+@keyframes firework {
+  0% { transform: translate(var(--x), var(--initialY)); width: var(--initialSize); opacity: 1; }
+  50% { width: 0.5vmin; opacity: 1; }
+  100% { transform: translate(var(--x), var(--finalY)); width: var(--finalSize); opacity: 0; } /* Corrected finalY */
+}
+
+/* Base styles for each individual firework element */
+.firework,
+.firework::before,
+.firework::after {
+  --initialSize: 0.5vmin;
+  --finalSize: 45vmin;
+  --particleSize: 0.2vmin;
+  /* Colors will be set by JavaScript dynamically */
+  --y: -30vmin; /* Initial vertical position of the burst relative to its launch point */
+  --x: -50%; /* Initial horizontal position of the burst relative to its launch point */
+  --initialY: 60vmin; /* How high the firework "launches" before bursting */
+  content: "";
+  animation: firework 2s infinite; /* Animation will be triggered by JS with delays */
+  position: absolute; /* Positioned relative to .firework-overlay-container (or its wrapper) */
+  /* top and left will be set by JS dynamically to place them */
+  transform: translate(-50%, var(--y)); /* Center the element's own sprite, then move by --y */
+  width: var(--initialSize);
+  aspect-ratio: 1;
+  background-size: var(--initialSize) var(--initialSize);
+  background-repeat: no-repeat;
+}
+
+/* Base background gradients for the firework particles - these use the CSS variables */
+.firework {
+    background:
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 50% 0%,
+      radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 100% 50%,
+      radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 50% 100%,
+      radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 0% 50%,
+      radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 80% 90%,
+      radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 95% 90%,
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 90% 70%,
+      radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 100% 60%,
+      radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 55% 80%,
+      radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 70% 77%,
+      radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 22% 90%,
+      radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 45% 90%,
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 33% 70%,
+      radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 10% 60%,
+      radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 31% 80%,
+      radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 28% 77%,
+      radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 13% 72%,
+      radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 80% 10%,
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 95% 14%,
+      radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 90% 23%,
+      radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 100% 43%,
+      radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 85% 27%,
+      radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 77% 37%,
+      radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 60% 7%,
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 22% 14%,
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 45% 20%,
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 33% 34%,
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 10% 29%,
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 31% 37%,
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 28% 7%,
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 13% 42%;
+}
+
+
+/* Pseudo-elements for the specific example's multiple bursts */
+.firework::before {
+  --x: -50%;
+  --y: -50%;
+  --initialY: -50%;
+  transform: translate(-50%, -50%) rotate(40deg) scale(1.3) rotateY(40deg);
+}
+.firework::after {
+  --x: -50%;
+  --y: -50%;
+  --initialY: -50%;
+  transform: translate(-50%, -50%) rotate(170deg) scale(1.15) rotateY(-30deg);
 }
