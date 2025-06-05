@@ -14,11 +14,22 @@ html, body {
   transition: background 0.3s, color 0.3s;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden; /* Prevents horizontal scrolling */
+  overflow-x: hidden; /* Keep to prevent horizontal scrolling */
+  overflow-y: auto; /* CRITICAL: Allow vertical scrolling on the main window */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for WebKit */
+  width: 0; /* Also set width to 0 for extra safety */
+  background: transparent; /* Make background transparent */
 }
 
 .page-wrapper {
-  flex: 1;
+  flex-grow: 1;
+  flex-shrink: 0; /* Keep flex-shrink: 0 to prevent it from collapsing */
+  flex-basis: auto;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -29,6 +40,7 @@ html, body {
   text-align: center;
   margin-bottom: 30px;
   padding-top: 20px;
+  flex-shrink: 0; /* Prevent header from shrinking */
 }
 
 .header-row h1 {
@@ -145,6 +157,7 @@ li.removing {
   margin: 0 auto 20px auto;
   box-sizing: border-box;
   align-items: center; /* Centers items vertically when flex-direction is row */
+  flex-shrink: 0; /* Prevent input section from shrinking */
 }
 
 #myInput {
@@ -199,7 +212,7 @@ li.removing {
 /* Task List */
 ul {
   list-style-type: none;
-  margin: 0 auto;
+  margin: 0 auto; /* Horizontal centering */
   padding: 0;
   width: 100%;
   max-width: 66%;
@@ -207,7 +220,12 @@ ul {
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 10px;
-  margin-bottom: auto; /* Push ul content to the top within page-wrapper */
+  /* CRITICAL: Allow UL to grow and shrink, but not push content beyond its boundaries */
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto; /* Let content define its base size */
+  /* If UL itself gets very long, it should ideally have its own scrollbar */
+  /* However, for now, let the page-wrapper's overflow-y handle it. */
 }
 
 ul li {
@@ -278,6 +296,7 @@ footer {
   width: 100%;
   box-sizing: border-box;
   overflow-x: hidden;
+  flex-shrink: 0; /* CRITICAL: Prevent footer from shrinking out of view */
 }
 
 /* Responsive Overrides (Adjust button size for different screens) */
@@ -330,10 +349,14 @@ footer {
   max-width: 66%;
   margin: 20px auto 0 auto;
   padding: 15px;
-  background-color: #f0f0f0;
+  background-color: #F5F5F7; /* Light gray background */
   border-radius: 12px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   margin-top: auto; /* Pushes this section to the bottom of the page-wrapper flex container */
+  margin-bottom: 10px; /* Adjust if needed */
+  flex-shrink: 0; /* CRITICAL: Prevent this section from shrinking out of view */
+  z-index: 10; /* Ensure draggable section is above most normal content */
+  pointer-events: auto; /* CRITICAL: Ensure elements inside are always interactive */
 }
 
 .draggable-cards-section h2 {
@@ -348,7 +371,7 @@ footer {
 
 /* Bootstrap card overrides */
 .draggable-card.card {
-  background-color: #fff;
+  background-color: #FF69B4; /* Bright pink background */
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
@@ -357,19 +380,23 @@ footer {
 
 .draggable-card .card-body {
   padding: 10px;
+  display: flex;
+  align-items: center; /* This centers content vertically in a flex container */
+  justify-content: center; /* This also centers content horizontally if it doesn't take full width */
 }
 
 .draggable-card .card-title {
   font-family: 'Homemade Apple', cursive, sans-serif;
   font-size: 1rem;
-  color: #333;
+  color:  white; /* Changed to white for better contrast with pink background */
+  margin-top: 0;
   margin-bottom: 0;
 }
 
 .draggable-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-  background-color: #f9f9f9;
+  background-color: #FF8DC4; /* Lighter pink on hover */
 }
 
 .draggable-card:active {
@@ -396,7 +423,7 @@ body.dark .draggable-cards-section h2 {
 }
 
 body.dark .draggable-card.card {
-  background-color: #465a6b;
+  background-color: #FF69B4; /* Bright pink background */
   border-color: #556b80;
 }
 
