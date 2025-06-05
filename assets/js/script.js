@@ -34,40 +34,37 @@ if (savedTheme === "dark" || savedTheme === "light") {
 
 // Add a new task to the list (used by input field and drag/drop)
 function newElement(taskText = null) {
-  // Modified to accept taskText for drag/drop
   const input = document.getElementById("myInput");
-  let inputValue;
-
-  if (taskText) {
-    // If taskText is provided (from drag/drop)
-    inputValue = taskText.trim();
-  } else {
-    // Otherwise, get from input field
-    inputValue = input.value.trim();
-  }
+  const inputValue = input.value.trim();
 
   // Check if the input is empty
   if (inputValue === "") {
-    alert("Please enter a task!");
-    return;
-  }
-
-  // Check if the input exceeds 40 characters
-  if (inputValue.length > 40) {
-    alert("Task cannot be more than 40 characters!");
+    showEmptyTaskMessage(); // Show the styled message
     return;
   }
 
   // Capitalize the first letter and make the rest lowercase
-  inputValue =
+  const formattedValue =
     inputValue.charAt(0).toUpperCase() + inputValue.slice(1).toLowerCase();
 
-  addTaskToDOM(inputValue); // Calls the function to add the task to the DOM
+  addTaskToDOM(formattedValue); // Add the task to the DOM
   if (!taskText) {
-    // Only clear input if it wasn't from drag/drop
-    input.value = "";
+    input.value = ""; // Clear the input field
   }
-  saveTasks(); // Calls the function to save the updated task list to localStorage
+  saveTasks(); // Save the updated task list
+}
+
+// Function to show the empty task message
+function showEmptyTaskMessage() {
+  const messageContainer = document.getElementById("emptyTaskMessage");
+  messageContainer.textContent =
+    "Empty tasks are like invisible unicorns... magical, but they won't get anything done! Please add some words!";
+  messageContainer.classList.add("active");
+
+  // Hide the message after 3 seconds
+  setTimeout(() => {
+    messageContainer.classList.remove("active");
+  }, 3000);
 }
 
 // Add a task when the Enter key is pressed
@@ -93,9 +90,8 @@ function addTaskToDOM(text, checked = false) {
 
   // Event handler for the close button
   span.onclick = function () {
-    const taskItem = this.parentElement; // The <li> element
+    const taskItem = this.parentElement;
 
-    // If the task was checked, play animation and fireworks
     if (taskItem.classList.contains("checked")) {
       taskItem.classList.add("removing"); // For spin-out animation
       triggerFireworks(); // Call the firework function
@@ -104,7 +100,6 @@ function addTaskToDOM(text, checked = false) {
         saveTasks();
       }, 700); // Match spinOut animation duration
     } else {
-      // If not checked, remove immediately without fireworks
       taskItem.remove();
       saveTasks();
     }
@@ -220,6 +215,7 @@ function triggerFireworks() {
   function createSingleFirework() {
     const fireworkDiv = document.createElement("div");
     fireworkDiv.className = "firework";
+    fireworkOverlay.appendChild(fireworkDiv);
 
     const colorSet =
       fireworkColorSets[Math.floor(Math.random() * fireworkColorSets.length)];
@@ -252,8 +248,6 @@ function triggerFireworks() {
     fireworkDiv.style.animationDelay = `${Math.random() * 1.5}s`; // Staggered entry
     fireworkDiv.style.animationDuration = `${2 + Math.random() * 0.5}s`; // Slightly varied duration
 
-    fireworkOverlay.appendChild(fireworkDiv);
-
     // Remove firework after its animation cycle
     setTimeout(() => {
       fireworkDiv.remove();
@@ -276,11 +270,9 @@ function triggerFireworks() {
   // So, the total time for the message to fade is 3s.
   // The overlay should disappear after all fireworks and the message are gone.
   setTimeout(() => {
-    fireworkOverlay.classList.remove("active"); // Start fading out the overlay
-    setTimeout(() => {
-      fireworkOverlay.innerHTML = ""; // Clean up after fade out
-    }, 500); // Allow time for CSS transition
-  }, 4000); // Total time to display fireworks and message before fading out (adjust as needed)
+    fireworkOverlay.classList.remove("active");
+    fireworkOverlay.innerHTML = ""; // Clear the overlay
+  }, 4000); // Adjust timing as needed
 }
 
 // --- Drag and Drop Functionality ---

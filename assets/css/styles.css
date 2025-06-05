@@ -48,15 +48,76 @@ body::-webkit-scrollbar {
 .header-row {
   position: relative;
   text-align: center;
-  margin-bottom: 30px;
-  padding-top: 20px;
+  margin-bottom: 10px;
+  padding-top: 0;
   flex-shrink: 0;
   /* Prevent header from shrinking */
 }
 
-.header-row h1 {
+.shadow-dance-text {
+  font-size: 4rem;
+  color: #4A90E2;
+  /* Your existing blue */
+  text-align: center;
   margin: 0;
-  font-size: 2.5rem;
+  text-shadow: 3px 3px 0 #F1C40F, 6px 6px 0 #FF69B4;
+  /* Ensure this is the bright pink */
+  animation: shadow-dance 2s infinite ease-in-out;
+}
+
+@keyframes shadow-dance {
+
+  0%,
+  100% {
+    text-shadow: 3px 3px 0 #F1C40F, 6px 6px 0 #FF69B4;
+  }
+
+  50% {
+    text-shadow: -3px -3px 0 #FF69B4, -6px -6px 0 #F1C40F;
+  }
+}
+
+/* Spin and fade out animation */
+@keyframes spinOut {
+  0% {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: rotate(720deg) scale(0);
+  }
+}
+
+li.removing {
+  animation: spinOut 2s ease forwards;
+}
+
+
+/* Style for the empty task message */
+.message-container {
+  position: fixed;
+  top: 30%; /* Position the message near the top */
+  left: 50%; /* Center the message horizontally */
+  transform: translate(-50%, -50%); /* Adjust for perfect centering */
+  background: #f1c40f; /* Yellow background */
+  color: #2c3e50; /* Dark text color */
+  font-size: 1.5rem; /* Medium font size */
+  text-align: center; /* Center the text */
+  padding: 15px 25px; /* Add padding around the text */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 0 30px #f39c12; /* Glowing effect */
+  z-index: 1001; /* Ensure it appears above other elements */
+  opacity: 0; /* Initially hidden */
+  visibility: hidden; /* Initially hidden */
+  transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s; /* Smooth fade-in and fade-out */
+}
+
+.message-container.active {
+  opacity: 1; /* Make the message visible */
+  visibility: visible; /* Make the message visible */
+  transition: opacity 0.3s ease-in-out; /* Smooth fade-in */
 }
 
 .theme-toggle {
@@ -123,47 +184,6 @@ body::-webkit-scrollbar {
   opacity: 1;
 }
 
-.shadow-dance-text {
-  font-size: 3rem;
-  color: #4A90E2;
-  /* Your existing blue */
-  text-align: center;
-  margin: 0;
-  text-shadow: 3px 3px 0 #F1C40F, 6px 6px 0 #FF69B4;
-  /* Ensure this is the bright pink */
-  animation: shadow-dance 2s infinite ease-in-out;
-}
-
-@keyframes shadow-dance {
-
-  0%,
-  100% {
-    text-shadow: 3px 3px 0 #F1C40F, 6px 6px 0 #FF69B4;
-  }
-
-  50% {
-    text-shadow: -3px -3px 0 #FF69B4, -6px -6px 0 #F1C40F;
-  }
-}
-
-/* Spin and fade out animation */
-@keyframes spinOut {
-  0% {
-    opacity: 1;
-    transform: rotate(0deg) scale(1);
-  }
-
-  100% {
-    opacity: 0;
-    transform: rotate(720deg) scale(0);
-  }
-}
-
-li.removing {
-  animation: spinOut 2s ease forwards;
-}
-
-
 /* Input Section */
 #myDIV {
   display: flex;
@@ -186,9 +206,8 @@ li.removing {
   margin: 5px auto 20px auto; /* Add margin above and below, horizontal centering */
   text-align: center; /* Horizontally center the text */
   font-family: 'Caveat', cursive, sans-serif; /* Same font as tasks */
-  font-size: 1.5rem; /* Adjust font size as needed, using rem for responsiveness */
+  font-size: 2rem; /* Adjust font size as needed, using rem for responsiveness */
   color:  #E74C3C;
-  font-weight: bold; /* Make it bold for emphasis */
   line-height: 1.5; /* Allow text to wrap nicely onto multiple lines */
 }
 
@@ -270,7 +289,8 @@ ul li {
   padding: 15px 12px;
   background: transparent;
   line-height: 1;
-  font-size: 25px;
+  font-size: 40px;
+  font-weight: bold;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -308,7 +328,7 @@ ul li .task-text {
   color: #E74C3C;
   font-weight: bold;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 30px;
   flex-shrink: 0;
   padding: 0 5px;
 }
@@ -397,9 +417,6 @@ footer p {
     font-size: 1.5rem;
   }
 
-  .header-row h1 {
-    padding-top: 50px; /* More space from the top for the H1 */
-  }
   .theme-toggle {
   top: 15px; /* Position from the top of the header-row, above the H1 */
   right: 15px; /* Keep it on the right */
@@ -426,18 +443,17 @@ footer p {
 
 /* DRAG & DROP STYLES */
 .draggable-cards-section {
-  width: 100%;
-  max-width: 66%;
-  margin: 20px auto 0 auto;
-  padding: 15px;
-  background-color: inherit; /* Inherit the background color from the parent */
+  width: 80%;
+  max-width: 70%;
+  margin: 5px auto 0 auto;
+  padding: 5px;
   border: none; /* Remove any default border */
   outline: none; /* Remove any default outline */
-  background: #F5F5F7; /* Use shorthand to potentially override inherited background images/gradients */
+  background: transparent; /* Use shorthand to potentially override inherited background images/gradients */
   border-radius: 12px;
   box-shadow: none; /* No shadow for a cleaner look */
   margin-top: auto; /* Pushes this section to the bottom of the page-wrapper flex container */
-  margin-bottom: 10px; /* Adjust if needed */
+  margin-bottom: 5px; /* Adjust if needed */
   flex-shrink: 0; /* CRITICAL: Prevent this section from shrinking out of view */
   z-index: 10; /* Ensure draggable section is above most normal content */
   pointer-events: auto; /* CRITICAL: Ensure elements inside are always interactive */
@@ -446,7 +462,7 @@ footer p {
 .draggable-cards-section h2 {
   font-family: 'Caveat', cursive, sans-serif;
   color: #4A90E2;
-  font-size: 3rem;
+  font-size: 2.5rem;
 }
 
 .draggable-card {
@@ -465,7 +481,7 @@ footer p {
 }
 
 .draggable-card .card-body {
-  padding: 10px;
+  padding: 5px;
   display: flex;
   align-items: center;
   /* This centers content vertically in a flex container */
