@@ -160,7 +160,7 @@ body::-webkit-scrollbar {
 }
 
 li.removing {
-  animation: spinOut 0.7s ease forwards;
+  animation: spinOut 2s ease forwards;
 }
 
 
@@ -268,24 +268,30 @@ ul {
 
 ul li {
   padding: 15px 12px;
-  background: #F5F5F7;
+  background: transparent;
   line-height: 1;
   font-size: 25px;
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 0;
-  border-radius: 8px;
+  border-radius: 0;
+  box-shadow: none; /* Remove shadow */
   font-family: 'Caveat', cursive, sans-serif;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background 0.2s, box-shadow 0.2s;
   flex-shrink: 1; /* Allow it to shrink if needed, but not collapse */
   flex-basis: content; /* Let content dictate its base size */
 }
 
 ul li:hover {
-  background: #eee;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  background: transparent; /* No background change on hover */
+  box-shadow: none; /* No shadow on hover */
+}
+
+/* Hover effect for task text */
+ul li:hover .task-text {
+  transform: scale(1.1); /* Slightly enlarges the text */
+  transition: transform 0.2s ease-in-out; /* Smooth transition for the scaling effect */
 }
 
 ul li.checked .task-text {
@@ -424,7 +430,7 @@ footer p {
   max-width: 66%;
   margin: 20px auto 0 auto;
   padding: 15px;
-  background-color: #F5F5F7; /* Light gray background */
+  background-color: inherit; /* Inherit the background color from the parent */
   border: none; /* Remove any default border */
   outline: none; /* Remove any default outline */
   background: #F5F5F7; /* Use shorthand to potentially override inherited background images/gradients */
@@ -452,9 +458,8 @@ footer p {
 .draggable-card.card {
   background-color: #FF69B4;
   /* Bright pink background */
-  border: 1px solid #ddd;
+  border: none;
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   height: 100%;
   /* Ensure cards in a row have same height */
 }
