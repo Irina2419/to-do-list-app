@@ -291,12 +291,21 @@ footer {
   background-color: #4A90E2;
   color: white;
   text-align: center;
-  padding: 10px 0;
+  padding: 30px 0;
   font-size: 14px;
   width: 100%;
   box-sizing: border-box;
   overflow-x: hidden;
   flex-shrink: 0; /* CRITICAL: Prevent footer from shrinking out of view */
+  display: flex; /* Make footer a flex container */
+  justify-content: center; /* Center horizontally (already done by text-align, but good for flex items) */
+  align-items: center; /* CRITICAL: Center content vertically */
+}
+
+footer p {
+  margin: 0; /* CRITICAL: Remove default top and bottom margins from the paragraph */
+  padding: 0; /* Ensure no extra padding from the paragraph itself */
+  line-height: 1; /* Ensure line height doesn't add extra space */
 }
 
 /* Responsive Overrides (Adjust button size for different screens) */
