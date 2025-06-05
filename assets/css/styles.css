@@ -263,7 +263,7 @@ ul {
   /* Horizontal centering */
   padding: 0;
   width: 100%;
-  max-width: 66%;
+  max-width: 90%;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
