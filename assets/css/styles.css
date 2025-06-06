@@ -664,3 +664,22 @@ body.dark .draggable-card:hover {
   z-index: 0; /* Ensure it appears behind the confetti message */
   pointer-events: none; /* Prevent interaction with the confetti effect */
 }
+
+#myUL li {
+  position: relative;
+  padding-left: 0.6em; /* Space for the bullet */
+  line-height: 1.2;
+  margin-bottom: 0.2em;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+}
+
+#myUL li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #000;
+  font-size: 1.2em;
+  line-height: 1.2;
+}
