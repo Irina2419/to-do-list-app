@@ -37,15 +37,18 @@ function newElement(taskText = null) {
   const input = document.getElementById("myInput");
   const inputValue = input.value.trim();
 
-  // Check if the input is empty
-  if (inputValue === "") {
+  // Check if the input is empty and not triggered by drag-and-drop
+  if (!taskText && inputValue === "") {
     showEmptyTaskMessage(); // Show the styled message
     return;
   }
 
+  // Use the provided taskText or the input value
+  const taskContent = taskText || inputValue;
+
   // Capitalize the first letter and make the rest lowercase
   const formattedValue =
-    inputValue.charAt(0).toUpperCase() + inputValue.slice(1).toLowerCase();
+    taskContent.charAt(0).toUpperCase() + taskContent.slice(1).toLowerCase();
 
   addTaskToDOM(formattedValue); // Add the task to the DOM
   if (!taskText) {
@@ -94,7 +97,6 @@ function addTaskToDOM(text, checked = false) {
 
     if (taskItem.classList.contains("checked")) {
       taskItem.classList.add("removing"); // For spin-out animation
-      triggerFireworks(); // Call the firework function
       setTimeout(() => {
         taskItem.remove(); // Remove task after animation
         saveTasks();
@@ -111,13 +113,15 @@ function addTaskToDOM(text, checked = false) {
 
 // Mark a task as complete or incomplete by clicking on the list item itself
 document.getElementById("myUL").addEventListener("click", function (e) {
-  const listItem = e.target.closest('li'); // Find the closest 'li' ancestor
+  const listItem = e.target.closest("li"); // Find the closest 'li' ancestor
 
   // CRITICAL: Only proceed if a list item was clicked AND it was NOT the 'close' button
-  if (listItem && !e.target.classList.contains('close')) {
+  if (listItem && !e.target.classList.contains("close")) {
     listItem.classList.toggle("checked"); // Toggle the "checked" class
     saveTasks(); // Save the updated task list
-    // Removed fireworks here, as they should only trigger on removal by 'x'
+    if (listItem.classList.contains("checked")) {
+      showFireworkMessage(); // Show the firework message
+    }
   }
 });
 
@@ -143,137 +147,27 @@ function loadTasks() {
 
 loadTasks(); // Calls the function to load tasks when the page loads
 
-// Function to show the new firework effect and message
-function triggerFireworks() {
-  const fireworkOverlay = document.getElementById("fireworkOverlay");
+// Keep only the logic for the firework message
+function showFireworkMessage() {
+  const messageContainer = document.getElementById("emptyTaskMessage");
+  messageContainer.textContent =
+    "Task completed! Great job! Keep up the momentum!";
+  messageContainer.classList.add("active");
 
-  if (!fireworkOverlay) {
-    console.error("Firework overlay container not found!");
-    return;
-  }
-
-  // Clear any existing content in the overlay first
-  fireworkOverlay.innerHTML = "";
-
-  // 1. Create and append the message
-  const messageDiv = document.createElement("div");
-  messageDiv.className = "firework-message";
-  messageDiv.textContent = "Well done beauty! One more task out of the way!";
-  fireworkOverlay.appendChild(messageDiv);
-
-  // 2. Activate the overlay (make it visible)
-  fireworkOverlay.classList.add("active");
-
-  // Custom color sets for different firework types
-  const fireworkColorSets = [
-    {
-      c1: "yellow",
-      c2: "khaki",
-      c3: "white",
-      c4: "lime",
-      c5: "gold",
-      c6: "mediumseagreen",
-    },
-    {
-      c1: "pink",
-      c2: "violet",
-      c3: "fuchsia",
-      c4: "orchid",
-      c5: "plum",
-      c6: "lavender",
-    },
-    {
-      c1: "cyan",
-      c2: "lightcyan",
-      c3: "lightblue",
-      c4: "PaleTurquoise",
-      c5: "SkyBlue",
-      c6: "lavender",
-    },
-    {
-      c1: "red",
-      c2: "orange",
-      c3: "yellow",
-      c4: "gold",
-      c5: "darkorange",
-      c6: "salmon",
-    },
-    {
-      c1: "greenyellow",
-      c2: "lime",
-      c3: "darkgreen",
-      c4: "forestgreen",
-      c5: "lightgreen",
-      c6: "chartreuse",
-    },
-  ];
-
-  const screenWidth = window.innerWidth;
-  const screenHeight = window.innerHeight;
-
-  // Function to create and append a single firework element
-  function createSingleFirework() {
-    const fireworkDiv = document.createElement("div");
-    fireworkDiv.className = "firework";
-    fireworkOverlay.appendChild(fireworkDiv);
-
-    const colorSet =
-      fireworkColorSets[Math.floor(Math.random() * fireworkColorSets.length)];
-
-    // Set CSS variables for colors
-    fireworkDiv.style.setProperty("--color1", colorSet.c1);
-    fireworkDiv.style.setProperty("--color2", colorSet.c2);
-    fireworkDiv.style.setProperty("--color3", colorSet.c3);
-    fireworkDiv.style.setProperty("--color4", colorSet.c4);
-    fireworkDiv.style.setProperty("--color5", colorSet.c5);
-    fireworkDiv.style.setProperty("--color6", colorSet.c6);
-
-    // Randomize initial launch position (from bottom of screen)
-    const launchX = Math.random() * screenWidth; // Launch from any X position
-    const launchY = screenHeight + 50; // Start 50px below the viewport bottom
-
-    // Randomize target burst position (within the screen, centered somewhat)
-    const burstTargetX = Math.random() * screenWidth;
-    const burstTargetY = screenHeight * (0.2 + Math.random() * 0.6); // Burst between 20% and 80% of screen height
-
-    // Calculate the CSS variables for the animation
-    fireworkDiv.style.left = `${launchX}px`; // Physical starting X for the element
-    fireworkDiv.style.top = `${launchY}px`; // Physical starting Y for the element
-
-    fireworkDiv.style.setProperty("--initialY", `-${launchY - burstTargetY}px`); // Distance up from launch point to burst point
-    fireworkDiv.style.setProperty("--y", `-${launchY - burstTargetY}px`); // Same as above for translateY in animation
-    fireworkDiv.style.setProperty("--x", `${burstTargetX - launchX}px`); // Horizontal shift to burst point
-
-    // Random animation delay for staggered appearance
-    fireworkDiv.style.animationDelay = `${Math.random() * 1.5}s`; // Staggered entry
-    fireworkDiv.style.animationDuration = `${2 + Math.random() * 0.5}s`; // Slightly varied duration
-
-    // Remove firework after its animation cycle
-    setTimeout(() => {
-      fireworkDiv.remove();
-    }, 2500); // Max duration of firework animation + buffer
-  }
-
-  const numberOfFireworks = 7; // You can adjust this number
-  let fireworksCreated = 0;
-
-  const fireworkInterval = setInterval(() => {
-    createSingleFirework();
-    fireworksCreated++;
-    if (fireworksCreated >= numberOfFireworks) {
-      clearInterval(fireworkInterval);
-    }
-  }, 300); // Create a new firework every 300ms
-
-  // 4. Fade out the message and then the entire overlay
-  // The message has its own fadeOutMessage animation (2s duration, 1s delay)
-  // So, the total time for the message to fade is 3s.
-  // The overlay should disappear after all fireworks and the message are gone.
+  // Hide the message after 3 seconds
   setTimeout(() => {
-    fireworkOverlay.classList.remove("active");
-    fireworkOverlay.innerHTML = ""; // Clear the overlay
-  }, 4000); // Adjust timing as needed
+    messageContainer.classList.remove("active");
+  }, 3000);
 }
+
+// Example usage: Call this function when a task is completed
+document.getElementById("myUL").addEventListener("click", function (e) {
+  const listItem = e.target.closest("li");
+
+  if (listItem && listItem.classList.contains("checked")) {
+    showFireworkMessage(); // Show the firework message
+  }
+});
 
 // --- Drag and Drop Functionality ---
 const addBtnDropTarget = document.getElementById("addBtnDropTarget");
@@ -297,27 +191,176 @@ draggableCards.forEach((card) => {
 
 // Add dragover listener to the add button (drop target)
 addBtnDropTarget.addEventListener("dragover", (e) => {
-  e.preventDefault(); // Prevent default to allow drop
-  addBtnDropTarget.classList.add("drag-over"); // Add visual feedback
+  e.preventDefault(); // Allow dropping
+  addBtnDropTarget.classList.add("drag-over"); // Add visual feedback for drag over
 });
 
-// Add dragleave listener to the add button
+// Remove drag-over class when the drag leaves the button
 addBtnDropTarget.addEventListener("dragleave", () => {
   addBtnDropTarget.classList.remove("drag-over"); // Remove visual feedback
 });
 
 // Add drop listener to the add button
 addBtnDropTarget.addEventListener("drop", (e) => {
-  e.preventDefault(); // Prevent default browser drop behavior
-  addBtnDropTarget.classList.remove("drag-over"); // Remove visual feedback
-
-  const taskText = e.dataTransfer.getData("text/plain");
+  e.preventDefault();
+  addBtnDropTarget.classList.remove("drag-over"); // Remove drag-over class
+  const taskText = e.dataTransfer.getData("text/plain"); // Get the dragged task text
   if (taskText) {
-    newElement(taskText); // Use newElement to add the task
-    // Optionally remove the dragged card from the DOM
-    if (draggedItem) {
-      draggedItem.remove();
-      // You might want to save/load draggable cards if they're persistent
-    }
+    newElement(taskText); // Add the dropped task
+    addBtnDropTarget.classList.add("success"); // Add success feedback
+
+    // Remove the success class after a short delay
+    setTimeout(() => {
+      addBtnDropTarget.classList.remove("success");
+    }, 500);
+  }
+});
+
+// Initialize tsParticles for the confetti effect
+tsParticles.load("tsparticles", {
+  fullScreen: {
+    zIndex: 1, // Ensure it appears behind the confetti message
+  },
+  particles: {
+    number: {
+      value: 0,
+    },
+    color: {
+      value: ["#00FFFC", "#FC00FF", "#fffc00"],
+    },
+    shape: {
+      type: ["circle", "triangle"],
+    },
+    opacity: {
+      value: { min: 0, max: 1 },
+      animation: {
+        enable: true,
+        speed: 2,
+        startValue: "max",
+        destroy: "min",
+      },
+    },
+    size: {
+      value: { min: 2, max: 4 },
+    },
+    links: {
+      enable: false,
+    },
+    life: {
+      duration: {
+        sync: true,
+        value: 5,
+      },
+      count: 1,
+    },
+    move: {
+      enable: true,
+      gravity: {
+        enable: true,
+        acceleration: 10,
+      },
+      speed: { min: 10, max: 20 },
+      decay: 0.1,
+      direction: "none",
+      straight: false,
+      outModes: {
+        default: "destroy",
+        top: "none",
+      },
+    },
+    rotate: {
+      value: { min: 0, max: 360 },
+      direction: "random",
+      move: true,
+      animation: {
+        enable: true,
+        speed: 60,
+      },
+    },
+    tilt: {
+      direction: "random",
+      enable: true,
+      move: true,
+      value: { min: 0, max: 360 },
+      animation: {
+        enable: true,
+        speed: 60,
+      },
+    },
+    roll: {
+      darken: {
+        enable: true,
+        value: 25,
+      },
+      enable: true,
+      speed: { min: 15, max: 25 },
+    },
+    wobble: {
+      distance: 30,
+      enable: true,
+      move: true,
+      speed: { min: -15, max: 15 },
+    },
+  },
+  emitters: {
+    life: {
+      count: 0,
+      duration: 0.1,
+      delay: 0.4,
+    },
+    rate: {
+      delay: 0.1,
+      quantity: 150,
+    },
+    size: {
+      width: 0,
+      height: 0,
+    },
+  },
+});
+
+// Function to trigger the confetti effect
+function triggerConfetti() {
+  tsParticles.load("tsparticles", {
+    emitters: {
+      life: {
+        count: 1, // Emit confetti once
+        duration: 0.1,
+        delay: 0.4,
+      },
+      rate: {
+        delay: 0.1,
+        quantity: 150,
+      },
+      size: {
+        width: 0,
+        height: 0,
+      },
+    },
+  });
+}
+
+// Function to show the confetti message and trigger the confetti effect
+function showConfettiMessage() {
+  const messageContainer = document.getElementById("emptyTaskMessage");
+  messageContainer.textContent =
+    "Task completed! Great job! Keep up the momentum!";
+  messageContainer.classList.add("confetti-message");
+
+  // Trigger the confetti effect
+  triggerConfetti();
+
+  // Hide the message after 3 seconds
+  setTimeout(() => {
+    messageContainer.classList.remove("confetti-message");
+  }, 3000);
+}
+
+// Event listener for marking tasks as completed
+document.getElementById("myUL").addEventListener("click", function (e) {
+  const listItem = e.target.closest("li");
+
+  if (listItem && listItem.classList.contains("checked")) {
+    showConfettiMessage(); // Show the confetti message and trigger the effect
   }
 });
