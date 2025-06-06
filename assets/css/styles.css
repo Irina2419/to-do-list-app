@@ -207,8 +207,8 @@ li.removing {
   text-align: center; /* Horizontally center the text */
   font-family: 'Caveat', cursive, sans-serif; /* Same font as tasks */
   font-size: 2rem; /* Adjust font size as needed, using rem for responsiveness */
-  color:  #E74C3C;
-  line-height: 1.5; /* Allow text to wrap nicely onto multiple lines */
+  color: #E74C3C;
+  line-height: 1.3; /* Reduce the space between lines */
 }
 
 /* Dark mode for the completion note */
@@ -438,58 +438,25 @@ footer p {
 }
 
 @media (max-width: 480px) {
-
-  /* Mobile phones */
   #myDIV {
-    flex-direction: column; /* Stack input and button */
-    align-items: stretch; /* Stretch input to full width */
+    display: flex; /* Use flexbox to align input and button side by side */
+    flex-direction: row; /* Align items in a row */
+    align-items: center; /* Center items vertically */
+    gap: 10px; /* Add spacing between the input and button */
+    width: 90%; /* Match the width of the heading */
+    max-width: 90%; /* Ensure it doesn't exceed the screen width */
+    margin: 0 auto; /* Center the container horizontally */
   }
 
   #myInput {
-    margin-bottom: 10px; /* Add space below input when stacked */
+    flex: 1; /* Allow the input to take up most of the space */
+    max-width: calc(100% - 4rem); /* Adjust width to leave space for the button */
   }
 
   .addBtn {
-    width: 3.5rem; /* Revert to a slightly larger size for easier tapping on mobile */
-    margin: 0 auto; /* Center button when stacked */
-  }
-
-  .addBtn i {
-    font-size: 1.5rem;
-  }
-
-  .theme-toggle {
-  top: 15px; /* Position from the top of the header-row, above the H1 */
-  right: 15px; /* Keep it on the right */
-  transform: none; /* CRITICAL: Remove vertical centering transform */
-  }
-
-  /* Draggable cards section */
-  .draggable-cards-section {
-    width: 100%; /* Make the section take full width */
-    padding: 10px; /* Add some padding for spacing */
-  }
-
-  /* Draggable cards */
-  .draggable-card {
-    width: 100%; /* Make each card take full width */
-    max-width: 95%; /* Reduce the extra space on the sides */
-    height: 120px; /* Set a consistent height for all cards */
-    margin: 5px auto; /* Reduce vertical spacing and center the cards */
-    display: flex;
-    justify-content: center; /* Center content horizontally */
-    align-items: center; /* Center content vertically */
-  }
-
-  /* Card title */
-  .draggable-card .card-title {
-    font-size: 1.2rem; /* Adjust font size for smaller screens */
-  }
-
-  #completion-note {
-    line-height: 1.3; /* Reduce the space between lines */
-    font-size: 1.2rem; /* Slightly increase the font size for better readability */
-    margin-bottom: 10px; /* Keep minimal space below the note */
+    width: 3.5rem; /* Set a fixed width for the button */
+    height: 3.5rem; /* Ensure the button is a square */
+    flex-shrink: 0; /* Prevent the button from shrinking */
   }
 }
 
