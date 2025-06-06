@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Caveat:wght@400..700&display=swap');
 
 * {
   box-sizing: border-box;
@@ -9,7 +9,6 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif;
   background-color: #F5F5F7;
   color: #000;
   transition: background 0.3s, color 0.3s;
@@ -63,6 +62,7 @@ body::-webkit-scrollbar {
   text-shadow: 3px 3px 0 #F1C40F, 6px 6px 0 #FF69B4;
   /* Ensure this is the bright pink */
   animation: shadow-dance 2s infinite ease-in-out;
+  font-family: 'Bungee', sans-serif;
 }
 
 @keyframes shadow-dance {
@@ -408,6 +408,7 @@ footer p {
   margin: 0; /* CRITICAL: Remove default top and bottom margins from the paragraph */
   padding: 0; /* Ensure no extra padding from the paragraph itself */
   line-height: 1; /* Ensure line height doesn't add extra space */
+  font-family: 'Caveat', cursive, sans-serif;
 }
 
 /* Responsive Overrides (Adjust button size for different screens) */
@@ -502,7 +503,7 @@ footer p {
 }
 
 .draggable-cards-section h2 {
-  font-family: 'Caveat', cursive, sans-serif;
+  font-family: 'Bungee', sans-serif;
   color: #4A90E2;
   font-size: 2.5rem;
 }
@@ -680,6 +681,21 @@ body.dark .draggable-card:hover {
   left: 0;
   top: 0;
   color: #000;
-  font-size: 1.2em;
+  font-size: 1em;
   line-height: 1.2;
 }
+
+.secondary-heading {
+  font-family: 'Bungee', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0;
+  color: #f6aca2;
+  letter-spacing: 0.4rem;
+  font-size: small;
+}
+
+
+
+
