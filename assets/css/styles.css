@@ -681,9 +681,58 @@ body.dark .draggable-card:hover {
   text-transform: uppercase;
   text-align: center;
   margin: 0;
-  color: #f6aca2;
   letter-spacing: 0.4rem;
   font-size: small;
+  /* Remove color here to let animation control it */
+}
+
+.instruction-animated {
+  display: inline-block;
+}
+
+.title-word {
+  animation: color-animation 4s linear infinite;
+  transition: color 0.2s;
+}
+
+.title-word-1 {
+  --color-1: #DF8453;
+  --color-2: #3D8DAE;
+  --color-3: #E4A9A8;
+}
+.title-word-2 {
+  --color-1: #DBAD4A;
+  --color-2: #ACCFCB;
+  --color-3: #17494D;
+}
+.title-word-3 {
+  --color-1: #ACCFCB;
+  --color-2: #E4A9A8;
+  --color-3: #ACCFCB;
+}
+.title-word-4 {
+  --color-1: #3D8DAE;
+  --color-2: #DF8453;
+  --color-3: #E4A9A8;
+}
+
+@keyframes color-animation {
+  0%    {color: var(--color-1)}
+  32%   {color: var(--color-1)}
+  33%   {color: var(--color-2)}
+  65%   {color: var(--color-2)}
+  66%   {color: var(--color-3)}
+  99%   {color: var(--color-3)}
+  100%  {color: var(--color-1)}
+}
+
+#instruction-note {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 0.6em;
+  margin-bottom: 0.6em;
 }
 
 
