@@ -735,6 +735,17 @@ body.dark .draggable-card:hover {
   margin-bottom: 0.6em;
 }
 
+.babel-effect {
+  filter: url(#distortionFilter);
+  font-family: 'Bungee', sans-serif;
+  color: #4A90E2;
+  font-size: 2.5rem;
+  font-weight: 400;
+  text-align: center;
+  transition: font-variation-settings 0.3s;
+  /* Keep other heading styles as needed */
+}
+
 
 
 

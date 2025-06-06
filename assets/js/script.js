@@ -345,3 +345,34 @@ function showConfettiMessage() {
     triggerConfetti();
   }
 }
+
+// Make sure GSAP is loaded via CDN in your HTML: 
+// <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+const dragHeading = document.querySelector(".babel-effect");
+if (dragHeading) {
+  dragHeading.addEventListener("mouseenter", () => {
+    gsap.to(".distort feDisplacementMap", {
+      duration: 1,
+      attr: { scale: 100 },
+      ease: "circ.out"
+    });
+    gsap.to(".distort feTurbulence", {
+      duration: 1,
+      attr: { baseFrequency: '2.08 .08' },
+      ease: "circ.out"
+    });
+  });
+  dragHeading.addEventListener("mouseleave", () => {
+    gsap.to(".distort feDisplacementMap", {
+      duration: 1,
+      attr: { scale: 0 },
+      ease: "circ.out"
+    });
+    gsap.to(".distort feTurbulence", {
+      duration: 1,
+      attr: { baseFrequency: '2.01 .01' },
+      ease: "circ.out"
+    });
+  });
+}
