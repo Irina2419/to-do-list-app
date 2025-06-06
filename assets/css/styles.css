@@ -454,6 +454,16 @@ footer p {
     height: 3.5rem; /* Ensure the button is a square */
     flex-shrink: 0; /* Prevent the button from shrinking */
   }
+
+  #completion-note {
+    margin-top: 20px;   /* Add space above the Task Tango note */
+    width: 90%;
+    max-width: 90%;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 1.8rem;
+    line-height: 1.2;
+  }
 }
 
 @media (min-width: 600px) {
