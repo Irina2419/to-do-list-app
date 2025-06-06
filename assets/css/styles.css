@@ -394,6 +394,10 @@ footer p {
     justify-content: center; /* Center them horizontally */
     align-items: center;
   }
+
+  .theme-toggle {
+    display: none; /* Hide the theme toggler on mobile devices */
+  }
 }
 
 @media (max-width: 480px) {
