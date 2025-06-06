@@ -80,48 +80,44 @@ document.getElementById("myInput").addEventListener("keypress", function (e) {
 // Helper function: Create and insert a task into the DOM
 function addTaskToDOM(text, checked = false) {
   const li = document.createElement("li");
+  if (checked) li.classList.add("checked");
+
   const textSpan = document.createElement("span");
   textSpan.className = "task-text";
   textSpan.textContent = text;
   li.appendChild(textSpan);
 
-  if (checked) li.classList.add("checked");
-
   const span = document.createElement("SPAN");
   span.className = "close";
   span.textContent = "\u00D7";
 
-  // Event handler for the close button
   span.onclick = function () {
     const taskItem = this.parentElement;
+    const wasCompleted = taskItem.classList.contains("checked");
 
-    if (taskItem.classList.contains("checked")) {
-      taskItem.classList.add("removing"); // For spin-out animation
+    if (wasCompleted) {
+      taskItem.classList.add("removing");
       setTimeout(() => {
-        taskItem.remove(); // Remove task after animation
+        taskItem.remove();
         saveTasks();
-      }, 700); // Match spinOut animation duration
+        showConfettiMessage(); // <-- This must be called here!
+      }, 700); // Match your animation duration
     } else {
       taskItem.remove();
       saveTasks();
     }
   };
 
-  li.appendChild(span); // Adds the close button to the task
-  document.getElementById("myUL").appendChild(li); // Adds the task to the unordered list (ul) with ID "myUL"
+  li.appendChild(span);
+  document.getElementById("myUL").appendChild(li);
 }
 
 // Mark a task as complete or incomplete by clicking on the list item itself
 document.getElementById("myUL").addEventListener("click", function (e) {
-  const listItem = e.target.closest("li"); // Find the closest 'li' ancestor
-
-  // CRITICAL: Only proceed if a list item was clicked AND it was NOT the 'close' button
+  const listItem = e.target.closest("li");
   if (listItem && !e.target.classList.contains("close")) {
-    listItem.classList.toggle("checked"); // Toggle the "checked" class
-    saveTasks(); // Save the updated task list
-    if (listItem.classList.contains("checked")) {
-      showFireworkMessage(); // Show the firework message
-    }
+    listItem.classList.toggle("checked");
+    saveTasks();
   }
 });
 
@@ -159,15 +155,6 @@ function showFireworkMessage() {
     messageContainer.classList.remove("active");
   }, 3000);
 }
-
-// Example usage: Call this function when a task is completed
-document.getElementById("myUL").addEventListener("click", function (e) {
-  const listItem = e.target.closest("li");
-
-  if (listItem && listItem.classList.contains("checked")) {
-    showFireworkMessage(); // Show the firework message
-  }
-});
 
 // --- Drag and Drop Functionality ---
 const addBtnDropTarget = document.getElementById("addBtnDropTarget");
@@ -342,25 +329,19 @@ function triggerConfetti() {
 
 // Function to show the confetti message and trigger the confetti effect
 function showConfettiMessage() {
-  const messageContainer = document.getElementById("emptyTaskMessage");
-  messageContainer.textContent =
-    "Task completed! Great job! Keep up the momentum!";
-  messageContainer.classList.add("confetti-message");
+  const messageContainer = document.querySelector(".confetti-message");
+  if (!messageContainer) return; // Prevent errors if not found
 
-  // Trigger the confetti effect
-  triggerConfetti();
+  messageContainer.textContent = "Task completed beauty! Great job! Keep up the momentum!";
+  messageContainer.classList.add("active");
 
   // Hide the message after 3 seconds
   setTimeout(() => {
-    messageContainer.classList.remove("confetti-message");
+    messageContainer.classList.remove("active");
   }, 3000);
-}
 
-// Event listener for marking tasks as completed
-document.getElementById("myUL").addEventListener("click", function (e) {
-  const listItem = e.target.closest("li");
-
-  if (listItem && listItem.classList.contains("checked")) {
-    showConfettiMessage(); // Show the confetti message and trigger the effect
+  // Optionally trigger confetti effect if you use tsParticles
+  if (typeof triggerConfetti === "function") {
+    triggerConfetti();
   }
-});
+}

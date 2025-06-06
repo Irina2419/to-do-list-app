@@ -78,10 +78,8 @@
         <!-- Button to add a new task; calls the "newElement" function -->
       </div>
 
-      <div id="completion-note">
-        Task tango! Click to check, click to uncheck. Let's get things done!
-      </div>
-
+      <div class="confetti-message"></div>
+      
       <!-- Task list -->
       <ul id="myUL"></ul>
       <!-- Unordered list to display tasks; tasks are dynamically added here by JavaScript -->
@@ -165,7 +163,10 @@
     </div>
 
     <!-- Confetti effect container -->
-    <div id="tsparticles"></div>
+    <div
+      id="tsparticles"
+      style="position: fixed; inset: 0; pointer-events: none; z-index: 1000"
+    ></div>
 
     <footer>
       <p>Made with ❤️ by Irina</p>
