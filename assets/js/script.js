@@ -99,15 +99,25 @@ function addTaskToDOM(text, checked = false) {
   span.onclick = function () {
     const taskItem = this.parentElement;
     const wasCompleted = taskItem.classList.contains("checked");
+    const taskText = taskItem.querySelector(".task-text").textContent.trim();
+
+    function showCardAgain() {
+      const card = Array.from(document.querySelectorAll(".draggable-card")).find(
+        (el) => el.dataset.task === taskText
+      );
+      if (card) card.style.display = "";
+    }
 
     if (wasCompleted) {
       taskItem.classList.add("removing");
       setTimeout(() => {
+        showCardAgain();
         taskItem.remove();
         saveTasks();
         showConfettiMessage();
       }, 700);
     } else {
+      showCardAgain();
       taskItem.remove();
       saveTasks();
     }
