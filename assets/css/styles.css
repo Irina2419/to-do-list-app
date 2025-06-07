@@ -625,6 +625,9 @@ body.dark .draggable-card:hover {
   opacity: 0; /* Initially hidden */
   visibility: hidden; /* Initially hidden */
   transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s; /* Smooth fade-in and fade-out */
+  min-width: 320px;    /* Add a minimum width */
+  max-width: 90vw;     /* Responsive max width */
+  width: 400px;        /* Increase the default width */
 }
 
 .confetti-message.active {
@@ -651,7 +654,7 @@ body.dark .draggable-card:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 0; /* Ensure it appears behind the confetti message */
+  z-index: 1002; /* Ensure it appears behind the confetti message */
   pointer-events: none; /* Prevent interaction with the confetti effect */
 }
 
