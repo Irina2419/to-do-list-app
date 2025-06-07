@@ -545,7 +545,7 @@ footer p {
 
 /* Dark mode for draggable cards */
 body.dark .draggable-cards-section {
-  background-color: #3b4b5c;
+  background-color: transparent;
   color: white;
 }
 
