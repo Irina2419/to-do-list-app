@@ -287,75 +287,98 @@ li.removing {
 
 /* Task List */
 ul {
-  list-style-type: none;
+  list-style-type: none; /* Keep: ensures no default browser bullets */
   margin: 0 auto;
-  /* Horizontal centering */
   padding: 0;
   width: 100%;
-  max-width: 90%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  /* CRITICAL: Allow UL to grow and shrink, but not push content beyond its boundaries */
+  max-width: 90%; /* This will define the maximum width before tasks wrap */
+
+  /* CRITICAL CHANGES for paragraph flow */
+  display: block; /* Change from flex to block: makes UL a standard block container */
+  /* REMOVED: flex-wrap, justify-content, gap - these are for flexbox layout */
+
+  /* Keep if UL is inside a flex container like .page-wrapper */
   flex-grow: 1;
   flex-shrink: 1;
   flex-basis: auto;
-  /* Let content define its base size */
-  /* If UL itself gets very long, it should ideally have its own scrollbar */
-  /* However, for now, let the page-wrapper's overflow-y handle it. */
+  text-align: center;
 }
 
 ul li {
-  padding: 15px 12px;
+  /* Keep existing visual styles */
   background: transparent;
-  line-height: 1;
-  font-size: 40px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 0;
-  border-radius: 16px;
-  box-shadow: none; /* Remove shadow */
-  font-family: 'Caveat', cursive, sans-serif;
-  transition: background 0.2s, box-shadow 0.2s;
-  flex-shrink: 1; /* Allow it to shrink if needed, but not collapse */
-  flex-basis: content; /* Let content dictate its base size */
+  font-size: 40px; /* Keep: Task text size */
+  font-weight: bold; /* Keep: Bold text */
+  font-family: 'Caveat', cursive, sans-serif; /* Keep: Font style */
+  transition: background 0.2s, box-shadow 0.2s; /* Keep: Hover transition */
+  border-radius: 16px; /* Keep: Rounded corners */
+  box-shadow: none; /* Keep: No shadow */
+  display: inline-block; /* Make each LI an inline-block to act as a single unit */
+  white-space: nowrap; /* Prevent the entire LI content (bullet, text, X) from wrapping */
+  overflow: hidden; /* Hide overflowing content */
+  text-overflow: ellipsis; /* ADD: Show ellipsis if the whole task overflows its line */
+  max-width: 100%; /* Ensure it respects parent width if it's the only item */
+  vertical-align: top; /* Align items to the top to prevent extra space from varying heights */
+  padding: 0 0.4em; /* Adjust padding to space out "words" (tasks) */
+  line-height: 1.2; /* Slightly adjusted for better readability as a paragraph */
+  margin-bottom: 0; /* Inline elements don't typically use margin-bottom for flow */
+  /* REMOVED: align-items, gap - these are for flexbox layout */
+  /* REMOVED: flex-shrink, flex-basis - not applicable to inline display */
 }
 
 ul li:hover {
-  background: transparent; /* No background change on hover */
-  box-shadow: none; /* No shadow on hover */
+  background: transparent;
+  box-shadow: none;
 }
 
 /* Hover effect for task text */
 ul li:hover .task-text {
-  transform: scale(1.1); /* Slightly enlarges the text */
-  transition: transform 0.2s ease-in-out; /* Smooth transition for the scaling effect */
+  transform: scale(1.1); /* Keep: Slightly enlarges the text */
+  transition: transform 0.2s ease-in-out; /* Keep: Smooth transition */
 }
 
 ul li.checked .task-text {
-  text-decoration: line-through;
-  color: #27AE60;
+  text-decoration: line-through; /* Keep: Line-through for checked tasks */
+  color: #27AE60; /* Keep: Color for checked tasks */
 }
 
 ul li .task-text {
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  white-space: nowrap; /* CHANGE: Prevent text inside the task from wrapping */
+  overflow: hidden; /* ADD: Required for text-overflow: ellipsis to work */
+  text-overflow: ellipsis; /* CHANGE: Show ellipsis if text overflows */
+  display: inline; /* Ensure the span itself behaves inline */
 }
 
-.close {
-  color: #E74C3C;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 30px;
-  flex-shrink: 0;
-  padding: 0 5px;
+/* Custom bullet point - AMENDED to work with inline list items */
+#myUL li::before {
+  content: "•"; /* Keep: Inserts the bullet character */
+  display: inline-block; /* CHANGE: Make it an inline-block to flow with text */
+  margin-right: 0.2em; /* ADD: Space between bullet and task text */
+  vertical-align: middle; /* Align vertically with text */
+  /* REMOVED: position: absolute, left, top, transform: translateY - these caused issues with inline display */
+  color: #000; /* Keep: Bullet color */
+  font-size: 1em; /* Keep: Bullet size */
+  line-height: 1.2; /* Keep: Consistent line height */
 }
 
-.close:hover {
-  color: #c0392b;
+
+/* AMENDED: Styling for the close button to fit inline paragraph flow */
+/* Increased specificity to ensure color applies */
+#myUL .close { /* CHANGE: Added #myUL to increase specificity */
+  display: inline-block; /* Treat the 'x' as an inline block so it respects margin/padding */
+  margin-left: 0.3em; /* Space it slightly from the task text */
+  color: #E74C3C; /* Keep: Red color */
+  font-weight: bold; /* Keep: Bold font */
+  cursor: pointer; /* Keep: Pointer cursor */
+  font-size: 0.8em; /* Adjusted: Make it smaller relative to the task text for better inline fit */
+  vertical-align: middle; /* Align it vertically with the text */
+  line-height: 1; /* Ensure consistent line height */
+  padding: 0 0.1em; /* Minimal padding */
+  flex-shrink: 0; /* Keep: Prevent it from shrinking if it's still somehow in a flex context */
+}
+
+#myUL .close:hover { /* CHANGE: Added #myUL to increase specificity */
+  color: #c0392b; /* Keep: Darker red on hover */
 }
 
 /* Dark Mode */
@@ -472,7 +495,6 @@ footer p {
   }
 }
 
-
 /* DRAG & DROP STYLES */
 .draggable-cards-section {
   width: 100%; /* Ensure the section takes the full width */
@@ -567,47 +589,6 @@ body.dark .draggable-card:hover {
   background-color: #556b80;
 }
 
-
-/* NEW FIREWORK STYLES */
-.firework-overlay-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1000;
-  pointer-events: none;
-  overflow: hidden;
-  background: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
-}
-
-.firework-overlay-container.active {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.firework-message {
-  background: #f1c40f;
-  color: #2c3e50;
-  font-size: 1.5rem;
-  padding: 15px 25px;
-  border-radius: 12px;
-  box-shadow: 0 0 30px #f39c12;
-  position: relative;
-  z-index: 1001;
-  text-align: center;
-  white-space: nowrap;
-  pointer-events: auto;
-  animation: fadeOutMessage 2s 1s forwards;
-}
-
 /* Confetti message styles */
 .confetti-message {
   position: fixed;
@@ -656,26 +637,6 @@ body.dark .draggable-card:hover {
   height: 100%;
   z-index: 1002; /* Ensure it appears behind the confetti message */
   pointer-events: none; /* Prevent interaction with the confetti effect */
-}
-
-#myUL li {
-  position: relative;
-  padding-left: 0.5em; /* Increase if needed for spacing */
-  line-height: 1.2;
-  margin-bottom: 0.2em;
-  padding-top: 0.2em;
-  padding-bottom: 0.2em;
-}
-
-#myUL li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #000;
-  font-size: 1em;
-  line-height: 1.2;
 }
 
 .secondary-heading {
