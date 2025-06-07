@@ -402,4 +402,16 @@ if (dragHeading) {
       ease: "circ.out"
     });
   });
+  dragHeading.addEventListener("touchcancel", () => {
+    gsap.to(".distort feDisplacementMap", {
+      duration: 1,
+      attr: { scale: 0 },
+      ease: "circ.out"
+    });
+    gsap.to(".distort feTurbulence", {
+      duration: 1,
+      attr: { baseFrequency: '2.01 .01' },
+      ease: "circ.out"
+    });
+  });
 }
