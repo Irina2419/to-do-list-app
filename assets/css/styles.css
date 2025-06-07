@@ -747,6 +747,9 @@ body.dark .draggable-card:hover {
   text-align: center;
   transition: font-variation-settings 0.3s;
   /* Keep other heading styles as needed */
+  user-select: none;
+  -webkit-user-select: none; /* For Safari/iOS */
+  -ms-user-select: none;     /* For IE/Edge */
 }
 
 /* Distort SVG element: hidden but filters are accessible */
