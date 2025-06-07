@@ -43,11 +43,27 @@ function newElement(taskText = null) {
   const formattedValue =
     taskContent.charAt(0).toUpperCase() + taskContent.slice(1).toLowerCase();
 
+  // Prevent duplicate tasks
+  const tasks = Array.from(document.querySelectorAll("#myUL .task-text")).map(
+    (el) => el.textContent.trim()
+  );
+  if (tasks.includes(formattedValue)) {
+    return; // Task already exists, do not add again
+  }
+
   addTaskToDOM(formattedValue);
   if (!taskText) {
     input.value = "";
   }
   saveTasks();
+
+  // Hide the card if it was added via drag-and-drop
+  if (taskText) {
+    const card = Array.from(document.querySelectorAll(".draggable-card")).find(
+      (el) => el.dataset.task === taskText
+    );
+    if (card) card.style.display = "none";
+  }
 }
 
 function showEmptyTaskMessage() {
