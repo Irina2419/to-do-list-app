@@ -746,6 +746,10 @@ body.dark .draggable-card:hover {
   /* Keep other heading styles as needed */
 }
 
-
-
-
+/* Distort SVG element: hidden but filters are accessible */
+.distort {
+  position: absolute; /* Remove from document flow */
+  width: 0; /* Make it invisible */
+  height: 0; /* Make it invisible */
+  overflow: hidden; /* Hide any overflowing content */
+}
