@@ -351,6 +351,7 @@ function showConfettiMessage() {
 
 const dragHeading = document.querySelector(".babel-effect");
 if (dragHeading) {
+  // Mouse events
   dragHeading.addEventListener("mouseenter", () => {
     gsap.to(".distort feDisplacementMap", {
       duration: 1,
@@ -364,6 +365,32 @@ if (dragHeading) {
     });
   });
   dragHeading.addEventListener("mouseleave", () => {
+    gsap.to(".distort feDisplacementMap", {
+      duration: 1,
+      attr: { scale: 0 },
+      ease: "circ.out"
+    });
+    gsap.to(".distort feTurbulence", {
+      duration: 1,
+      attr: { baseFrequency: '2.01 .01' },
+      ease: "circ.out"
+    });
+  });
+
+  // Touch events for mobile
+  dragHeading.addEventListener("touchstart", () => {
+    gsap.to(".distort feDisplacementMap", {
+      duration: 1,
+      attr: { scale: 100 },
+      ease: "circ.out"
+    });
+    gsap.to(".distort feTurbulence", {
+      duration: 1,
+      attr: { baseFrequency: '2.08 .08' },
+      ease: "circ.out"
+    });
+  });
+  dragHeading.addEventListener("touchend", () => {
     gsap.to(".distort feDisplacementMap", {
       duration: 1,
       attr: { scale: 0 },
