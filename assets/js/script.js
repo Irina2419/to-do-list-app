@@ -1,4 +1,5 @@
 /* jshint esversion: 6 */
+/* global tsParticles, gsap */
 
 // Toggle light/dark theme
 const body = document.body;
@@ -155,17 +156,6 @@ function loadTasks() {
 
 loadTasks();
 
-function showFireworkMessage() {
-  const messageContainer = document.getElementById("emptyTaskMessage");
-  messageContainer.textContent =
-    "Task completed! Great job! Keep up the momentum!";
-  messageContainer.classList.add("active");
-
-  setTimeout(() => {
-    messageContainer.classList.remove("active");
-  }, 3000);
-}
-
 const addBtnDropTarget = document.getElementById("addBtnDropTarget");
 const draggableCards = document.querySelectorAll(".draggable-card");
 let draggedItem = null;
@@ -208,51 +198,12 @@ addBtnDropTarget.addEventListener("drop", (e) => {
 
 // Consolidated and corrected confetti functions
 function triggerConfetti() {
-  const count = 200;
-  const defaults = {
-    origin: { y: 0.7 },
-  };
-
-  function fire(particleRatio, opts) {
-    if (typeof confetti === "function") {
-      confetti(
-        Object.assign({}, defaults, opts, {
-          particleCount: Math.floor(count * particleRatio),
-        })
-      );
-    } else {
-      console.warn(
-        "Confetti function not found. Ensure tsparticles.confetti.bundle.min.js is loaded."
-      );
-    }
+  const instance = tsParticles.dom().find(
+    (inst) => inst.interactivity.element.id === "tsparticles"
+  );
+  if (instance) {
+    instance.playEmitter(0);
   }
-
-  fire(0.25, {
-    spread: 26,
-    startVelocity: 55,
-  });
-
-  fire(0.2, {
-    spread: 60,
-  });
-
-  fire(0.35, {
-    spread: 100,
-    decay: 0.91,
-    scalar: 0.8,
-  });
-
-  fire(0.1, {
-    spread: 120,
-    startVelocity: 25,
-    decay: 0.92,
-    scalar: 1.2,
-  });
-
-  fire(0.1, {
-    spread: 120,
-    startVelocity: 45,
-  });
 }
 
 function showConfettiMessage() {
