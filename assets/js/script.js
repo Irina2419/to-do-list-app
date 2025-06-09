@@ -196,35 +196,62 @@ addBtnDropTarget.addEventListener("drop", (e) => {
   }
 });
 
-// Consolidated and corrected confetti functions
-function triggerConfetti() {
-  const instance = tsParticles.dom().find(
-    (inst) => inst.interactivity.element.id === "tsparticles"
+// TriggerConfetti function
+const count = 200,
+  defaults = {
+    origin: { y: 0.7 },
+  };
+
+function fire(particleRatio, opts) {
+  confetti(
+    Object.assign({}, defaults, opts, {
+      particleCount: Math.floor(count * particleRatio),
+    })
   );
-  if (instance) {
-    instance.playEmitter(0);
-  }
+}
+
+function triggerConfetti() {
+  console.log("Confetti triggered!"); // Debugging message
+
+  fire(0.25, {
+    spread: 26,
+    startVelocity: 55,
+  });
+
+  fire(0.2, {
+    spread: 60,
+  });
+
+  fire(0.35, {
+    spread: 100,
+    decay: 0.91,
+    scalar: 0.8,
+  });
+
+  fire(0.1, {
+    spread: 120,
+    startVelocity: 25,
+    decay: 0.92,
+    scalar: 1.2,
+  });
+
+  fire(0.1, {
+    spread: 120,
+    startVelocity: 45,
+  });
 }
 
 function showConfettiMessage() {
-  const messageContainer = document.querySelector(".confetti-message");
-
-  if (!messageContainer) {
-    console.error("Confetti message container not found!");
-    return;
-  }
-
-  messageContainer.textContent =
-    "Task completed beauty! Great job! Keep up the momentum!";
+  const messageContainer = document.getElementById("confettiMessage");
+  if (!messageContainer) return;
+  messageContainer.textContent = "Task completed! Great job! Keep up the momentum!";
   messageContainer.classList.add("active");
-
   setTimeout(() => {
     messageContainer.classList.remove("active");
+    messageContainer.textContent = "";
   }, 3000);
 
-  if (typeof triggerConfetti === "function") {
-    triggerConfetti();
-  }
+  triggerConfetti();
 }
 
 const dragHeading = document.querySelector(".babel-effect");

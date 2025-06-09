@@ -39,12 +39,6 @@
   <body class="light">
     <!-- Default theme is light; toggled by the "dark" class -->
 
-    <!-- Confetti effect container (can be here or at the end, but outside .page-wrapper) -->
-    <div
-      id="tsparticles"
-      style="position: fixed; inset: 0; pointer-events: none; z-index: 1000"
-    ></div>
-
     <div class="page-wrapper">
       <!-- Wrapper for the main content -->
 
@@ -91,8 +85,8 @@
         </h2>
       </div>
 
-      <!-- Confetti message container, only one is needed -->
-      <div class="confetti-message"></div>
+      <!-- Confetti message container -->
+      <div id="confettiMessage" class="message-container"></div>
 
       <!-- Task list -->
       <ul id="myUL"></ul>

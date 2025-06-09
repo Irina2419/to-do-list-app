@@ -96,6 +96,7 @@ li.removing {
 
 
 /* Style for the empty task message */
+/* Style for the empty task message (now also used for confetti message) */
 .message-container {
   position: fixed;
   top: 50%; /* Center vertically */
@@ -108,10 +109,14 @@ li.removing {
   padding: 15px 25px; /* Add padding around the text */
   border-radius: 12px; /* Rounded corners */
   box-shadow: 0 0 30px #f39c12; /* Glowing effect */
-  z-index: 1001; /* Ensure it appears above other elements */
+  z-index: 1001; /* CHANGED: Set to a lower value so confetti appears on top */
   opacity: 0; /* Initially hidden */
   visibility: hidden; /* Initially hidden */
   transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s; /* Smooth fade-in and fade-out */
+  min-width: 320px;    /* Apply these width properties to both messages */
+  max-width: 90vw;     /* Apply these width properties to both messages */
+  width: 400px;        /* Apply these width properties to both messages */
+  pointer-events: auto; /* Allow interaction with both messages when active */
 }
 
 .message-container.active {
@@ -590,34 +595,6 @@ body.dark .draggable-card:hover {
   background-color: #556b80;
 }
 
-/* Confetti message styles */
-.confetti-message {
-  position: fixed;
-  top: 50%; /* Center vertically */
-  left: 50%; /* Center horizontally */
-  transform: translate(-50%, -50%); /* Adjust for perfect centering */
-  background: #f1c40f; /* Yellow background */
-  color: #2c3e50; /* Dark text color */
-  font-size: 1.5rem; /* Medium font size */
-  text-align: center; /* Center the text */
-  padding: 15px 25px; /* Add padding around the text */
-  border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 0 30px #f39c12; /* Glowing effect */
-  z-index: 1001; /* Ensure it appears above other elements */
-  opacity: 0; /* Initially hidden */
-  visibility: hidden; /* Initially hidden */
-  transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s; /* Smooth fade-in and fade-out */
-  min-width: 320px;    /* Add a minimum width */
-  max-width: 90vw;     /* Responsive max width */
-  width: 400px;        /* Increase the default width */
-}
-
-.confetti-message.active {
-  opacity: 1; /* Make the message visible */
-  visibility: visible; /* Make the message visible */
-  transition: opacity 0.3s ease-in-out; /* Smooth fade-in */
-}
-
 /* Fade-out animation for the confetti message */
 @keyframes fadeOutMessage {
   from {
@@ -629,7 +606,6 @@ body.dark .draggable-card:hover {
   }
 }
 
-/* Confetti effect container */
 #tsparticles {
   position: fixed;
   top: 0;
