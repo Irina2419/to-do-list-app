@@ -243,15 +243,22 @@ function triggerConfetti() {
 
 function showConfettiMessage() {
   const messageContainer = document.getElementById("confettiMessage");
-  if (!messageContainer) return;
-  messageContainer.textContent = "Task completed! Great job! Keep up the momentum!";
+  if (!messageContainer) {
+    console.error("Confetti message container not found!");
+    return;
+  }
+  
+  messageContainer.textContent =
+    "Task completed beauty! Great job! Keep up the momentum!";
   messageContainer.classList.add("active");
+
   setTimeout(() => {
     messageContainer.classList.remove("active");
-    messageContainer.textContent = "";
   }, 3000);
 
-  triggerConfetti();
+  if (typeof triggerConfetti === "function") {
+    triggerConfetti();
+  }
 }
 
 const dragHeading = document.querySelector(".babel-effect");
